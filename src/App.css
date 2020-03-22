@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+.available {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.available>* {
+    margin: 1%;
+    border: 1px solid #BDD3D1;
+}
+
+.main .bug {
+    background-color: #BEF4EB;
+}
+
+.main .fish {
+    background-color: #BFF5F9;
+}
