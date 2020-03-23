@@ -36,11 +36,17 @@ function Main() {
         })
     }
 
+    function getAllCritters() {
+        getCritters("bugs");
+        getCritters("fish");
+    }
+
   return (
       <div className="main">
       Hello
       <button onClick={() => getCritters("bugs")}>Get Bugs</button>
       <button onClick={() => getCritters("fish")}>Get Fish</button>
+      <button onClick={() => getAllCritters()}>Get all critters</button>
       <div className="available">
           {bugs ? (bugs.map(function(item) {
               // console.log(item);

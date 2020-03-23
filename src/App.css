@@ -45,7 +45,7 @@
 }
 
 .available>* {
-    margin: 1%;
+    /* margin: 1%; */
     border: 1px solid #BDD3D1;
 }
 
@@ -55,4 +55,17 @@
 
 .main .fish {
     background-color: #BFF5F9;
+}
+
+/* .main .cardHeader {
+    padding-bottom: 0;
+}
+
+.main .cardInfo {
+    padding-top: 0;
+} */
+
+#extraInfo {
+    display: flex;
+    justify-content: space-between;
 }

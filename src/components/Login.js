@@ -15,7 +15,7 @@ function Login() {
             setUser(authUser.user);
             if(authUser.additionalUserInfo.isNewUser) {
                 if(firebase) {
-                    firebase.db.collection('users').doc(authUser.user.uid).set({bank:0, admin: false})
+                    firebase.db.collection('users').doc(authUser.user.uid).set()
                 }
             }
         }).catch(error => {
