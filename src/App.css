@@ -1,6 +1,10 @@
-.App {
-  text-align: center;
+html {
+    background-color: #292C3D;
 }
+/* .main {
+  text-align: center;
+
+} */
 
 .App-logo {
   height: 40vmin;
@@ -44,16 +48,30 @@
     align-items: center;
 }
 
+
 .available>* {
+    /* margin: 1%; */
+    /* border: 1px solid #5E6482; */
+}
+
+.main .bug {
+    background-color: #255B47;
+}
+
+.main .fish {
+    background-color: #32637A;
+}
+
+.light .available>* {
     /* margin: 1%; */
     border: 1px solid #BDD3D1;
 }
 
-.main .bug {
+.light .main .bug {
     background-color: #BEF4EB;
 }
 
-.main .fish {
+.light .main .fish {
     background-color: #BFF5F9;
 }
 

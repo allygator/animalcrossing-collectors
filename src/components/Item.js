@@ -19,6 +19,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
       flexDirection: 'column',
       minWidth: 250,
       borderRadius: 12,
+      color: '#E8F0F2',
       boxShadow: '0 2px 4px 0 rgba(138, 148, 159, 0.2)',
       '& > *:nth-child(1)': {
         marginRight: spacing(1),
@@ -29,15 +30,20 @@ const useStyles = makeStyles(({ spacing, palette }) => {
   },
     heading: {
       fontFamily: family,
-      fontSize: 10,
-      marginBottom: 0,
+      fontSize: 18,
+      marginBottom: 1,
+      paddingBottom: 0.5,
+      color: '#E8F0F2',
+      fontWeight: 'bold'
     },
     subheader: {
       fontFamily: family,
-      fontSize: 14,
-      color: palette.grey[600],
+      fontSize: 12,
+      // color: palette.grey[600],
       letterSpacing: '1px',
-      marginBottom: 4,
+      paddingTop: 1,
+      marginBottom: 2,
+      color: 'rgba(232, 240, 242, 0.7)'
     },
   };
 });
@@ -56,8 +62,8 @@ function Item(props) {
     const styles = useStyles();
   return (
       <Card className={cx(styles.card, props.type)} elevation={0}>
-          <CardHeader title={item.Name} disableTypography className="cardHeader"/>
-      <CardContent className="cardInfo">
+          <CardHeader title={item.Name} disableTypography className={cx(styles.heading, "cardHeader")}/>
+      <CardContent className={cx(styles.subheader, "cardInfo")}>
       <p className={styles.subheader}>{item.Value} Bells • {item.TimeString ? item.TimeString : ""}</p>
       <Divider />
       <div id="extraInfo">
