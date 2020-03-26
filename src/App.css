@@ -48,10 +48,13 @@ html {
     align-items: center;
 }
 
+.main .MuiAvatar-root {
+    width: 30px;
+    height: 30px;
+}
 
-.available>* {
-    /* margin: 1%; */
-    /* border: 1px solid #5E6482; */
+.MuiCardHeader-root {
+    flex-direction: row-reverse;
 }
 
 .main .bug {

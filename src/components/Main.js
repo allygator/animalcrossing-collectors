@@ -9,9 +9,9 @@ function Main() {
     const userData = useContext(UserContext);
     const [bugs,addBugs] = useState([]);
     const [fish,addFish] = useState([]);
+    let date = new Date();
 
     function getCritters(type) {
-        let date = new Date();
         let month = date.toLocaleString('default', { month: 'long' });
         let monthQuery = "Months.".concat(month);
         let timeQuery = "Time.".concat(date.getHours());
@@ -37,9 +37,9 @@ function Main() {
         getCritters("fish");
     }
 
-    function signout() {
-        firebase.doSignOut()
-    };
+    // function signout() {
+    //     firebase.doSignOut()
+    // };
 
   return (
       <div className="main">
@@ -51,11 +51,11 @@ function Main() {
       <div className="available">
           {bugs ? (bugs.map(function(item) {
               // console.log(item);
-                  return <Item item={item} key={item.Name} type="bug"/>;
+                  return <Item item={item} key={item.Name} currMonth={date.getMonth()} type="bug"/>;
           })) : ""}
           {fish ? (fish.map(function(item) {
               // console.log(item);
-                  return <Item item={item} key={item.Name} type="fish"/>;
+                  return <Item item={item} key={item.Name} currMonth={date.getMonth()} type="fish"/>;
           })) : ""}
       </div>
     </div>

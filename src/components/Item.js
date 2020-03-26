@@ -6,7 +6,12 @@ import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import Avatar from '@material-ui/core/Avatar';
+import WarningIcon from '@material-ui/icons/Warning';
 
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+]
 
 const useStyles = makeStyles(({ spacing, palette }) => {
   const family =
@@ -45,11 +50,15 @@ const useStyles = makeStyles(({ spacing, palette }) => {
       marginBottom: 2,
       color: 'rgba(232, 240, 242, 0.7)'
     },
+    avatar: {
+        backgroundColor: '#7A212F',
+    }
   };
 });
 
 function Item(props) {
     const [item,setItem] = useState([]);
+    let leave = false;
     useEffect(() => {
         setItem(props.item);
     }, [props.item]);
@@ -60,9 +69,20 @@ function Item(props) {
     //     console.log(props)
     // }, [props]);
     const styles = useStyles();
+    if(props.currMonth) {
+        // console.log(props.currMonth);
+        // console.log(monthNames[props.currMonth+1]);
+        let next = monthNames[props.currMonth+1]
+        // console.log("current: "+props.item.Months[monthNames[props.currMonth]]+" next: "+props.item.Months[next]);
+        if(!props.item.Months[next]) {
+            leave = true;
+        }
+    }
+
+    let avi = <Avatar aria-label="Leaving" alt="Leaving at the end of the month" className={styles.avatar}><WarningIcon fontSize='small'/></Avatar>
   return (
       <Card className={cx(styles.card, props.type)} elevation={0}>
-          <CardHeader title={item.Name} disableTypography className={cx(styles.heading, "cardHeader")}/>
+          <CardHeader title={item.Name} disableTypography className={cx(styles.heading, "cardHeader")} avatar={leave ? avi : ''}/>
       <CardContent className={cx(styles.subheader, "cardInfo")}>
       <p className={styles.subheader}>{item.Value} Bells • {item.TimeString ? item.TimeString : ""}</p>
       <Divider />
