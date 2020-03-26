@@ -1,5 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react';
 import '../App.css';
+import critters from '../critters'
 import {FirebaseContext} from './Firebase';
 import UserContext from './UserContext';
 import GoogleButton from 'react-google-button';
@@ -13,28 +14,28 @@ function Login() {
     function signin() {
         firebase.doSignInWithGoogle().then(authUser => {
             setUser(authUser.user);
-            if(authUser.additionalUserInfo.isNewUser) {
-                if(firebase) {
-                    firebase.db.collection('users').doc(authUser.user.uid).set()
-                }
+            if(authUser.additionalUserInfo.isNewUser && firebase) {
+                firebase.db.collection('users').doc(authUser.user.uid).set(critters);
             }
         }).catch(error => {
             console.log(error);
         });
     };
 
-    useEffect(() => {
-        let unsubscribe = firebase.auth.onAuthStateChanged(authUser => {
-            // console.log(firebase.auth.currentUser);
-            authUser ? setUser(authUser) : setUser(null);
-        });
-        return () => unsubscribe();
-    }, [firebase.auth])
+    // useEffect(() => {
+    //     let unsubscribe = firebase.auth.onAuthStateChanged(authUser => {
+    //         // console.log(firebase.auth.currentUser);
+    //         authUser ? setUser(authUser) : setUser(null);
+    //     });
+    //     return () => unsubscribe();
+    // }, [firebase.auth])
 
 
-    useEffect(() => {
-        userData.updateUser({authUser: user });
-    }, [user, userData])
+    // useEffect(() => {
+    //     userData.updateUser({authUser: user });
+    //     console.log(userData);
+    //     console.log(user);
+    // }, [])
 
     const googleLogin = <GoogleButton type="light" onClick={signin} />;
 

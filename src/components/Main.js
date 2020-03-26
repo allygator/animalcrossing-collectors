@@ -1,18 +1,14 @@
-import React, {useContext, useState}  from 'react';
+import React, {useContext, useState, useEffect}  from 'react';
 import {FirebaseContext} from './Firebase';
+import UserContext from './UserContext';
 import Item from './Item';
+import {Link} from 'react-router-dom';
 
 function Main() {
     const firebase = useContext(FirebaseContext);
+    const userData = useContext(UserContext);
     const [bugs,addBugs] = useState([]);
     const [fish,addFish] = useState([]);
-    // useEffect(() => {
-    //     firebase.db.collection('bugs').where("Price", "==", "Unknown").get().then(function(querySnapshot) {
-    //         querySnapshot.forEach(function(doc) {
-    //         console.log(doc.data())
-    //         });
-    //     })
-    // }, [firebase]);
 
     function getCritters(type) {
         let date = new Date();
@@ -41,9 +37,14 @@ function Main() {
         getCritters("fish");
     }
 
+    function signout() {
+        firebase.doSignOut()
+    };
+
   return (
       <div className="main">
       Hello
+
       <button onClick={() => getCritters("bugs")}>Get Bugs</button>
       <button onClick={() => getCritters("fish")}>Get Fish</button>
       <button onClick={() => getAllCritters()}>Get all critters</button>
@@ -60,5 +61,8 @@ function Main() {
     </div>
   );
 }
+
+// <button onClick={signout}>Logout</button>
+// <Link to="/login">Login</Link>
 
 export default Main;
