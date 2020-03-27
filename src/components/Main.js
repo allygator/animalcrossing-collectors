@@ -11,7 +11,14 @@ function Main() {
     const [fish,addFish] = useState([]);
     let date = new Date();
 
-    function getCritters(type) {
+    function getCritters(type, reset) {
+        if(reset) {
+            if(type==="fish") {
+                addBugs([]);
+            } else {
+                addFish([]);
+            }
+        }
         let month = date.toLocaleString('default', { month: 'long' });
         let monthQuery = "Months.".concat(month);
         let timeQuery = "Time.".concat(date.getHours());
@@ -33,8 +40,19 @@ function Main() {
     }
 
     function getAllCritters() {
-        getCritters("bugs");
-        getCritters("fish");
+        if(!Object.keys(fish).length && Object.keys(bugs).length) {
+            console.log("got fish");
+            getCritters("fish", false);
+        } else if(!Object.keys(bugs).length && Object.keys(fish).length) {
+            console.log("got bugs");
+            getCritters("bugs", false);
+        } else {
+            console.log("both");
+            getCritters("bugs", false);
+            getCritters("fish", false);
+        }
+
+        // getCritters("fish", false);
     }
 
     // function signout() {
@@ -45,9 +63,9 @@ function Main() {
       <div className="main">
       Hello
 
-      <button onClick={() => getCritters("bugs")}>Get Bugs</button>
-      <button onClick={() => getCritters("fish")}>Get Fish</button>
-      <button onClick={() => getAllCritters()}>Get all critters</button>
+      <button onClick={() => getCritters("bugs", true)}>Available Bugs</button>
+      <button onClick={() => getCritters("fish", true)}>Available Fish</button>
+      <button onClick={() => getAllCritters()}>All Available</button>
       <div className="available">
           {bugs ? (bugs.map(function(item) {
               // console.log(item);

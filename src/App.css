@@ -53,8 +53,13 @@ html {
     height: 30px;
 }
 
-.MuiCardHeader-root {
+.main .available .MuiCardHeader-root {
     flex-direction: row-reverse;
+    margin-right: 0;
+}
+
+.main .available .MuiCardHeader-avatar {
+    margin-right: 0;
 }
 
 .main .bug {
