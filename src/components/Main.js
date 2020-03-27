@@ -41,13 +41,10 @@ function Main() {
 
     function getAllCritters() {
         if(!Object.keys(fish).length && Object.keys(bugs).length) {
-            console.log("got fish");
             getCritters("fish", false);
         } else if(!Object.keys(bugs).length && Object.keys(fish).length) {
-            console.log("got bugs");
             getCritters("bugs", false);
         } else {
-            console.log("both");
             getCritters("bugs", false);
             getCritters("fish", false);
         }
