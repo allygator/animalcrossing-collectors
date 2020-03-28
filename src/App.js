@@ -1,5 +1,5 @@
 import React, {useEffect, useContext, useState}  from 'react';
-import './App.css';
+import './App.scss';
 import Login from './components/Login';
 import Main from './components/Main';
 import UserContext  from './components/UserContext';
@@ -8,6 +8,7 @@ import  {BrowserRouter as Router, Route, Switch, } from 'react-router-dom';
 
 function App() {
     const firebase = useContext(FirebaseContext);
+    // eslint-disable-next-line
       const [user, setUser] = useState('');
       const [state, setContext] = useState({authUser: user, updateUser: userUpdate});
 
@@ -19,7 +20,7 @@ function App() {
                   ? setContext({...state, authUser: authUser})
                   : setContext(null)
           });
-
+          // eslint-disable-next-line
       }, [firebase])
       //This function is passed to the context provider so that
       // down range children can update the context

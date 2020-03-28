@@ -1,0 +1,176 @@
+// dark colors: , , , #E8F0F2,
+// light colors: , #C9A084,
+
+$dark-green:#255B47;
+$light-green:#B3F3E3;
+$dark-blue: #32637A;
+$light-blue: #8AD0E0;
+$dark-grey: #292C3D;
+$light-grey:#979CB2;
+$cream: #EDECE1;
+$peach: #FFEBDD;
+$brown: #68403C;
+$warning: #7A212F;
+
+// body {
+//     height: 100vh;
+// }
+
+// #root {
+//     height: 100vh;
+//     overflow: visible;
+// }
+
+.main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    #header {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        #signout {
+            margin-right: 8px;
+        }
+        #lights {
+            background-color: $light-grey;
+            height: 40px;
+            width: 40px;
+
+        }
+    }
+
+    .little {
+        display: flex;
+        // flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        align-self: stretch;
+        width: 90%;
+        h1 {
+            font-size: 1.2em;
+            margin: 0.2em;
+        }
+        h2 {
+            font-size: 1em;
+            margin: 0.2em;
+        }
+    }
+    &.light {
+        color: $dark-grey;
+        background-color: $cream;
+        .bug {
+            background-color: $light-green;
+        }
+        .fish {
+            background-color: $light-blue;
+        }
+        .MuiCardHeader-root, .MuiCardContent-root {
+            color: $dark-grey;
+        }
+        .MuiAvatar-circle.on {
+            background-color: $brown;
+        }
+    }
+    &.dark {
+        background-color: #292C3D;
+        color: $cream;
+        .bug {
+            background-color: $dark-green;
+        }
+        .fish {
+            background-color: $dark-blue;
+        }
+        .MuiCardHeader-root, .MuiCardContent-root {
+            color: $cream;
+        }
+        .MuiAvatar-circle.on {
+            background-color:$brown;
+        }
+        .MuiCheckbox-root {
+            color: $cream;
+        }
+    }
+    .MuiCardContent-root:last-child {
+        padding-bottom: 8px;
+    }
+    .MuiAvatar-root {
+        width: 30px;
+        height: 30px;
+        &.warning {
+            background-color: $warning;
+        }
+    }
+    #collections {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 4px;
+        >div {
+            display: flex;
+            // flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+        }
+        .MuiAvatar-root {
+            width: 25px;
+            height: 25px;
+
+        }
+        .MuiIconButton-root {
+            padding: 2px 1px 2px 5px;
+        }
+    }
+    #extraInfo {
+        display: flex;
+        justify-content: space-between;
+        p {
+            margin: 0.5em 0;
+        }
+    }
+
+}
+
+#quick {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.available {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.main .available .MuiCardHeader-root {
+    flex-direction: row-reverse;
+    margin-right: 0;
+}
+
+.main .available .MuiCardHeader-avatar {
+    margin-right: 0;
+}
+
+// .light .available>* {
+//     /* margin: 1%; */
+//     border: 1px solid #BDD3D1;
+// }
+//
+// .light .main .bug {
+//     background-color: #BEF4EB;
+// }
+//
+// .light .main .fish {
+//     background-color: #BFF5F9;
+// }
+
+/* .main .cardHeader {
+    padding-bottom: 0;
+}
+
+.main .cardInfo {
+    padding-top: 0;
+} */
