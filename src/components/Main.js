@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect}  from 'react';
 import {FirebaseContext} from './Firebase';
 import UserContext from './UserContext';
-import Item from './LoginItem';
+import Item from './Item';
 // import {Link} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';

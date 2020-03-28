@@ -1,4 +1,5 @@
-import React, {useEffect, useState}  from 'react';
+import React, {useEffect, useState, useContext}  from 'react';
+import PropTypes from 'prop-types';
 import cx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -6,9 +7,12 @@ import Divider from '@material-ui/core/Divider';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
-// import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from '@material-ui/core/Checkbox';
 import { faExclamationTriangle as warning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import {FirebaseContext} from './Firebase';
+import UserContext from './UserContext';
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
@@ -57,11 +61,28 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 });
 
 function Item(props) {
+    const firebase = useContext(FirebaseContext);
+    const userData = useContext(UserContext);
     const [item,setItem] = useState([]);
+    const [collected,setCollected] = useState(false);
+    const [donated,setDonated] = useState(false);
     let leave = false;
+    // useEffect(() => {
+    //     console.log(props);
+    // }, [props]);
     useEffect(() => {
         setItem(props.item);
     }, [props.item]);
+    useEffect(() => {
+        // console.log("collected")
+        setCollected(props.collected);
+    }, [props.collected]);
+    useEffect(() => {
+        console.log(collected)
+    }, [collected]);
+    useEffect(() => {
+        setDonated(props.donated);
+    }, [props.donated]);
 
     const styles = useStyles();
     if(props.currMonth) {
@@ -71,7 +92,56 @@ function Item(props) {
         }
     }
 
-    let avi = <Avatar aria-label="Leaving" className="warning"><FontAwesomeIcon icon={warning} alt="Switch light mode" size="xs" transform="up-2" title="Leaving end of month"/></Avatar>
+    function updateDB(type, val) {
+        let name = props.item.Name.toLowerCase();
+        if(type === "collected") {
+            firebase.db.collection('users').doc(userData.authUser.uid).update({[name]:[val,donated]});
+
+        } else {
+            firebase.db.collection('users').doc(userData.authUser.uid).update({[name]:[collected,val]});
+        }
+    }
+
+    function update(type) {
+        if(type === "collected") {
+            updateDB("collected", !collected);
+            setCollected(!collected);
+
+        } else {
+            updateDB("donated", !donated);
+            setDonated(!donated);
+        }
+    }
+
+    let collections = <div id="collections">
+        <div>Collected
+            <Checkbox
+              icon={
+                  <Avatar className="off">
+                        <FontAwesomeIcon icon={faCheck} alt="Switch light mode" size="sm"/></Avatar>
+              }
+                    checkedIcon={
+                        <Avatar className="on"><FontAwesomeIcon icon={faCheck} alt="Switch light mode" size="sm"/></Avatar>
+                    }
+              checked={collected}
+              onClick={() => update("collected")}
+              />
+        </div>
+        <div>Donated<Checkbox
+          icon={
+              <Avatar className="off">
+                    <FontAwesomeIcon icon={faCheck} alt="Switch light mode" size="sm"/></Avatar>
+          }
+                checkedIcon={
+                    <Avatar className="on"><FontAwesomeIcon icon={faCheck} alt="Switch light mode" size="sm"/></Avatar>
+                }
+                checked={donated}
+                onClick={() => update("donated")}
+          />
+          </div>
+    </div>
+
+    let avi = <Avatar className={styles.avatar}><FontAwesomeIcon icon={warning} alt="Switch light mode" size="xs" transform="up-2" title="Leaving end of month"/></Avatar>
   return (
       <Card className={cx(styles.card, props.type)} elevation={0}>
           <CardHeader title={item.Name} disableTypography className={cx(styles.heading, "cardHeader")} avatar={leave ? avi : ''}/>
@@ -81,10 +151,23 @@ function Item(props) {
       <div id="extraInfo">
       <p>{item.Location}</p>
       {props.type === "fish" ? <p>Shadow size: {item.Shadow}</p> : ""}
-  </div>
+      </div>
+      {userData ? <Divider /> : ''}
+      {userData ? collections : ''}
+
   </CardContent>
     </Card >
   );
+}
+
+Item.defaultProps = {
+    collected: false,
+    donated: false
+}
+
+Item.propTypes ={
+    collected: PropTypes.bool,
+    donated: PropTypes.bool
 }
 
 export default Item;
