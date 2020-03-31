@@ -6,7 +6,7 @@ $light-green:#B3F3E3;
 $dark-blue: #32637A;
 $light-blue: #8AD0E0;
 $dark-grey: #292C3D;
-$light-grey:#979CB2;
+$light-grey:#B2B5C1;
 $cream: #EDECE1;
 $peach: #FFEBDD;
 $brown: #68403C;
@@ -27,40 +27,12 @@ $warning: #7A212F;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    #header {
-        position: absolute;
-        top: 2px;
-        right: 2px;
-        #signout {
-            margin-right: 8px;
-        }
-        #lights {
-            background-color: $light-grey;
-            height: 40px;
-            width: 40px;
-
-        }
-    }
-
-    .little {
-        display: flex;
-        // flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        align-self: stretch;
-        width: 90%;
-        h1 {
-            font-size: 1.2em;
-            margin: 0.2em;
-        }
-        h2 {
-            font-size: 1em;
-            margin: 0.2em;
-        }
-    }
     &.light {
         color: $dark-grey;
         background-color: $cream;
+        #options {
+            background-color: #B2B5C1;
+        }
         .bug {
             background-color: $light-green;
         }
@@ -77,20 +49,26 @@ $warning: #7A212F;
     &.dark {
         background-color: #292C3D;
         color: $cream;
+        #options {
+            background-color: #45464F;
+        }
         .bug {
             background-color: $dark-green;
         }
         .fish {
             background-color: $dark-blue;
         }
-        .MuiCardHeader-root, .MuiCardContent-root {
+        .MuiCardHeader-root, .MuiCardContent-root, .MuiCheckbox-root,.MuiFormLabel-root, .MuiInputBase-input, .MuiPaper-root, .MuiIconButton-root {
+            color: $cream;
+        }
+        .MuiInput-underline:before, .MuiInput-underline:hover:not(.Mui-disabled):before {
+            border-bottom-color: $cream;
+        }
+        .MuiSelect-icon {
             color: $cream;
         }
         .MuiAvatar-circle.on {
             background-color:$brown;
-        }
-        .MuiCheckbox-root {
-            color: $cream;
         }
     }
     .MuiCardContent-root:last-child {
@@ -109,7 +87,6 @@ $warning: #7A212F;
         margin-top: 4px;
         >div {
             display: flex;
-            // flex-direction: column;
             align-items: center;
             justify-content: space-around;
         }
@@ -129,14 +106,167 @@ $warning: #7A212F;
             margin: 0.5em 0;
         }
     }
+}
 
+#header {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    #signout {
+        margin-right: 8px;
+    }
+    #lights {
+        background-color: $light-grey;
+        height: 40px;
+        width: 40px;
+
+    }
+}
+
+#pulldown {
+    z-index: 10;
+    display: flex;
+    width: 100%;
+    height: 0;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 55px;
+    // color: black;
+    #options {
+        transform: translateY(-16vh);
+        transition: all 300ms ease-out;
+        order: 1;
+        // background-color: white;
+        width: 80%;
+        padding: 21px 0;
+        border-radius: 0 0 10px 10px;
+        position: fixed;
+        .menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #quick {
+            flex-wrap: wrap;
+            label {
+                flex: 0 0 100%;
+                align-self: center;
+            }
+        }
+    }
+    #pulldown-checkbox {
+        position: absolute;
+        top: -100%;
+        left: -100%;
+        z-index: -1;
+        opacity: 0;
+    }
+    >label {
+        transform: translateY(7.5vh);
+        z-index: 12;
+        display: flex;
+        position: fixed;
+        #label-words {
+            font-size: 12px;
+            padding-right: 6px;
+        }
+
+    }
+    #pulldown-checkbox:checked {
+        +.pulldown-label {
+            transition: all 300ms ease-out;
+            transform: translateY(28.9vh);
+            svg {
+                color: purple;
+            	transform: rotate(calc(180deg));
+                transition: all 300ms ease-out;
+            }
+        }
+        ~ .options {
+            transform: translateY(5.3vh);
+        }
+    }
+    #pulldown-checkbox:not(:checked) {
+        +.pulldown-label{
+            transition: all 300ms ease-out;
+            svg {
+            	// transform: rotate(calc(0deg));
+                transition: all 300ms ease-out;
+            }
+        }
+    }
+}
+
+.little {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;
+    margin-right: 150px;
+    .intro {
+        display: none;
+    }
+    #time-select, #sort {
+        width: 80%;
+        margin: auto;
+    }
+    #sort {
+        display: flex;
+        justify-content: space-between;
+    }
+    display: none;
 }
 
 #quick {
     display: flex;
     justify-content: space-between;
     width: 80%;
+    margin: 8px auto;
+
 }
+#time-select, #sort {
+    .MuiExpansionPanelSummary-root {
+        padding: 0;
+    }
+    .MuiExpansionPanelDetails-root {
+        justify-content: space-between;
+        padding: 0;
+    }
+    .MuiPaper-elevation1 {
+        box-shadow: none;
+    }
+    .settings {
+        width: 100%;
+        background-color: transparent;
+    }
+    .MuiFormControl-root {
+        min-width: 120px;
+    }
+}
+
+#time-select {
+    display: flex;
+    width: 90%;
+    margin: auto;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    p {
+        flex: 0 0 100%;
+    }
+}
+
+#sort {
+    display: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
 
 .available {
     display: flex;
@@ -153,6 +283,57 @@ $warning: #7A212F;
 .main .available .MuiCardHeader-avatar {
     margin-right: 0;
 }
+
+@media (max-width: 705px) {
+    // #header {
+    //     position: relative;
+    //     align-self: flex-end;
+    // }
+    .little {
+        flex-direction: column;
+        margin: 0 10px;
+    }
+
+    .intro {
+        // width: 90%;
+        margin: 0 auto;
+    }
+
+    #quick {
+        width: 95%;
+        align-items: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+        button {
+            margin: 2px 0;
+        }
+    }
+
+    .reduce {
+        display: none;
+    }
+}
+
+@media (min-width: 360px) {
+    #pulldown {
+        #options {
+            transform: translateY(-32.4vh);
+        }
+        >label {
+            transform: translateY(-6.2vh);
+        }
+        #pulldown-checkbox:checked {
+            +.pulldown-label {
+                transform: translateY(44vh);
+            }
+            ~ .options {
+                transform: translateY(17.9vh);
+            }
+        }
+    }
+}
+
+
 
 // .light .available>* {
 //     /* margin: 1%; */
