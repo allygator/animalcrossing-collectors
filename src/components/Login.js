@@ -21,24 +21,6 @@ function Login() {
         });
     };
 
-    // useEffect(() => {
-    //     let unsubscribe = firebase.auth.onAuthStateChanged(authUser => {
-    //         // console.log(firebase.auth.currentUser);
-    //         authUser ? setUser(authUser) : setUser(null);
-    //     });
-    //     return () => unsubscribe();
-    // }, [firebase.auth])
-
-
-    // useEffect(() => {
-    //     userData.updateUser({authUser: user });
-    //     console.log(userData);
-    //     console.log(user);
-    // }, [])
-
-    const googleLogin = <GoogleButton type="light" onClick={signin} />;
-
-
     return (<div className="login">
 
         {
@@ -48,7 +30,7 @@ function Login() {
                         pathname: "/"
                       }}
                     />
-                : googleLogin
+                : <GoogleButton type="light" onClick={signin} />
         }
     </div>);
 }

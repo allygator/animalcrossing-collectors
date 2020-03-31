@@ -28,9 +28,10 @@ $warning: #7A212F;
     align-items: center;
     min-height: 100vh;
     #header {
-        position: absolute;
-        top: 2px;
+        position: fixed;
+        bottom: 2px;
         right: 2px;
+        z-index: 1;
         #signout {
             margin-right: 8px;
         }
@@ -49,6 +50,7 @@ $warning: #7A212F;
         align-items: center;
         align-self: stretch;
         width: 90%;
+        margin: auto;
         h1 {
             font-size: 1.2em;
             margin: 0.2em;
@@ -154,23 +156,31 @@ $warning: #7A212F;
     margin-right: 0;
 }
 
-// .light .available>* {
-//     /* margin: 1%; */
-//     border: 1px solid #BDD3D1;
-// }
-//
-// .light .main .bug {
-//     background-color: #BEF4EB;
-// }
-//
-// .light .main .fish {
-//     background-color: #BFF5F9;
-// }
+@media (max-width: 705px) {
+    .info {
+        width: 80%;
+        margin: auto;
+    }
+    .little {
+        flex-direction: column;
+        margin: 0 10px;
+    }
 
-/* .main .cardHeader {
-    padding-bottom: 0;
+    .intro {
+        // width: 90%;
+        margin: 0 auto;
+    }
+
+    #quick {
+        width: 95%;
+        align-items: center;
+        flex-wrap: wrap;
+        button {
+            margin: 2px 0;
+        }
+    }
+
+    .reduce {
+        display: none;
+    }
 }
-
-.main .cardInfo {
-    padding-top: 0;
-} */
