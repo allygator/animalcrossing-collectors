@@ -84,7 +84,9 @@ function Critters(props) {
     }, [props, firebase.db]);
 
     return (
-        <div className="available">
+        <div className="content">
+            {userData ? <p id="full">Checking donated will automatically check collected as well</p> : ''}
+            <div className="available">
             {
                 critters
                     ? (critters.map(function(item) {
@@ -109,6 +111,7 @@ function Critters(props) {
                     }))
                     : ""
             }
+            </div>
         </div>
     );
 }
