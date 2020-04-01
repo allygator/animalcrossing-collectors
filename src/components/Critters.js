@@ -91,6 +91,7 @@ function Critters(props) {
                 critters
                     ? (critters.map(function(item) {
                         let name = item.Name.toLowerCase();
+                        name = name.replace("'", "");
                         let collected;
                         let donated;
                         if (userData) {
