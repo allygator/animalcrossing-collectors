@@ -170,12 +170,26 @@ a {
 }
 
 @media (max-width: 705px) {
+    .main {
+        &.centered {
+            #header {
+                width: unset;
+                position: fixed;
+                top: unset;
+                bottom: 2px;
+            }
+        }
+    }
     #header {
+        width: unset !important;
         position: fixed;
         top: unset;
         bottom: 2px;
         right: 2px;
         z-index: 1;
+        h1 {
+            display: none;
+        }
     }
 
     .info {
