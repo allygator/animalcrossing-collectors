@@ -77,7 +77,6 @@ function Item(props) {
     }, [props.item]);
     useEffect(() => {
         if(props.item.Shadow) {
-            console.log("fish");
             setType("fish");
         } else {
             setType("bug");

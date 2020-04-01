@@ -18,16 +18,19 @@ function Header(props) {
 
     return (
         <div id="header">
-            {
-                userData
-                    ? <Button variant="contained" onClick={signout} id="signout">signout</Button>
-                    : <Link to='/login'><Button variant="contained" id="signin">Login</Button></Link>
-            }
+            {!props.size ? <h1>AC:NH Critter Collector</h1> : ''}
+            <div id="buttons">
             <IconButton onClick={props.toggle} id="lights">
                 <FontAwesomeIcon icon={props.mode
                         ? lightOff
                         : lightOn} title="Switch light mode" transform="up-3"/>
             </IconButton>
+            {
+                userData
+                    ? <Button variant="contained" onClick={signout} id="signout">signout</Button>
+                    : <Link to='/login'><Button variant="contained" id="signin">Login</Button></Link>
+            }
+            </div>
     </div>);
 }
 
