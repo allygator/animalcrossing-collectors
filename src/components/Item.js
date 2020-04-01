@@ -104,6 +104,7 @@ function Item(props) {
 
     function updateDB(type, val) {
         let name = props.item.Name.toLowerCase();
+        name = name.replace("'", "");
         if(type === "collected") {
             firebase.db.collection('users').doc(userData.authUser.uid).update({[name]:[val,donated]});
 
