@@ -39,7 +39,7 @@ function Main() {
                                 }
                                 onChange = {
                                     handleChange
-                                } />} label="Hide Collected"/>
+                                } />} label="Hide Donated"/>
                         : ''
                 }
             </div>

@@ -21,6 +21,7 @@ function Critters(props) {
     const [collection, setCollection] = useState({});
     let currentDate = new Date();
 
+    //Get what the user has already collected/donated
     useEffect(() => {
         if(userData && userData.authUser) {
             let unsubscribe = firebase.db.collection('users').doc(userData.authUser.uid).onSnapshot(doc => {
@@ -82,16 +83,6 @@ function Critters(props) {
         }
     }, [props, firebase.db]);
 
-    // useEffect(() => {
-    //     if (userData && userData.authUser) {
-    //         firebase.db.collection("users").doc(userData.authUser.uid).get().then(function(querySnapshot) {
-    //             setCollection(querySnapshot.data());
-    //         });
-    //     }
-    // }, [userData, firebase.db]);
-    // useEffect(() => {
-    //     console.log(critters)
-    // }, [critters]);
     return (
         <div className="available">
             {
@@ -104,8 +95,8 @@ function Critters(props) {
                             collected = collection[name][0];
                             donated = collection[name][1];
                             if (props.hidden) {
-                                if (!collected) {
-                                    return <Item item={item} key={item.Name} currMonth={currentDate.getMonth()}  type={types[props.type]}/>;
+                                if (!donated) {
+                                    return <Item item={item} key={item.Name} currMonth={currentDate.getMonth()}  type={types[props.type]} collected={collected}/>;
                                 } else {
                                     return '';
                                 }

@@ -108,7 +108,12 @@ function Item(props) {
             firebase.db.collection('users').doc(userData.authUser.uid).update({[name]:[val,donated]});
 
         } else {
-            firebase.db.collection('users').doc(userData.authUser.uid).update({[name]:[collected,val]});
+            if(type === "donated" && val) {
+                firebase.db.collection('users').doc(userData.authUser.uid).update({[name]:[val,val]});
+            } else {
+                firebase.db.collection('users').doc(userData.authUser.uid).update({[name]:[collected,val]});
+            }
+
         }
     }
 
