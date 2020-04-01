@@ -1,6 +1,3 @@
-// dark colors: , , , #E8F0F2,
-// light colors: , #C9A084,
-
 $dark-green:#255B47;
 $light-green:#B3F3E3;
 $dark-blue: #32637A;
@@ -12,52 +9,32 @@ $peach: #FFEBDD;
 $brown: #68403C;
 $warning: #7A212F;
 
-// body {
-//     height: 100vh;
-// }
-
-// #root {
-//     height: 100vh;
-//     overflow: visible;
-// }
+a {
+    text-decoration: none;
+}
 
 .main {
     display: flex;
-    justify-content: center;
+    &.centered {
+        justify-content: center;
+        #header {
+            width: 100%;
+            // margin: 0;
+            margin: 0 6px;
+            position: fixed;
+            top: 2px;
+            // left: 2px;
+        }
+        .info {
+            width: 60%;
+        }
+        #quick {
+            margin: auto;
+        }
+    }
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    #header {
-        position: absolute;
-        top: 2px;
-        right: 2px;
-        #signout {
-            margin-right: 8px;
-        }
-        #lights {
-            background-color: $light-grey;
-            height: 40px;
-            width: 40px;
-
-        }
-    }
-
-    .little {
-        display: flex;
-        // flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        align-self: stretch;
-        width: 90%;
-        h1 {
-            font-size: 1.2em;
-            margin: 0.2em;
-        }
-        h2 {
-            font-size: 1em;
-            margin: 0.2em;
-        }
-    }
     &.light {
         color: $dark-grey;
         background-color: $cream;
@@ -93,6 +70,44 @@ $warning: #7A212F;
             color: $cream;
         }
     }
+
+    #header {
+        width: 98%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 1%;
+        h1 {
+            margin: 0.2em 0;
+        }
+        #signout, #signin {
+            margin-left: 8px;
+        }
+        #lights {
+            background-color: $light-grey;
+            height: 40px;
+            width: 40px;
+        }
+    }
+
+    .little {
+        display: flex;
+        // flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        align-self: stretch;
+        width: 90%;
+        margin: 8px auto;
+        h1 {
+            font-size: 1.2em;
+            margin: 0.2em;
+        }
+        h2 {
+            font-size: 1em;
+            margin: 0.2em;
+        }
+    }
+
     .MuiCardContent-root:last-child {
         padding-bottom: 8px;
     }
@@ -136,6 +151,15 @@ $warning: #7A212F;
     display: flex;
     justify-content: space-between;
     width: 80%;
+
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 40px;
 }
 
 .available {
@@ -154,23 +178,53 @@ $warning: #7A212F;
     margin-right: 0;
 }
 
-// .light .available>* {
-//     /* margin: 1%; */
-//     border: 1px solid #BDD3D1;
-// }
-//
-// .light .main .bug {
-//     background-color: #BEF4EB;
-// }
-//
-// .light .main .fish {
-//     background-color: #BFF5F9;
-// }
+@media (max-width: 705px) {
+    .main {
+        &.centered {
+            #header {
+                width: unset;
+                position: fixed;
+                top: unset;
+                bottom: 2px;
+            }
+        }
+    }
+    #header {
+        width: unset !important;
+        position: fixed;
+        top: unset;
+        bottom: 2px;
+        right: 2px;
+        z-index: 1;
+        h1 {
+            display: none;
+        }
+    }
 
-/* .main .cardHeader {
-    padding-bottom: 0;
+    .info {
+        width: 80%;
+        margin: auto;
+    }
+    .little {
+        flex-direction: column;
+        margin: 0 10px;
+    }
+
+    .intro {
+        // width: 90%;
+        margin: 0 auto;
+    }
+
+    #quick {
+        width: 95%;
+        align-items: center;
+        flex-wrap: wrap;
+        button {
+            margin: 2px 0;
+        }
+    }
+
+    .reduce {
+        display: none;
+    }
 }
-
-.main .cardInfo {
-    padding-top: 0;
-} */

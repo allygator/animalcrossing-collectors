@@ -61,11 +61,13 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 });
 
 function Item(props) {
+    // console.log(props);
     const firebase = useContext(FirebaseContext);
     const userData = useContext(UserContext);
     const [item,setItem] = useState([]);
     const [collected,setCollected] = useState(false);
     const [donated,setDonated] = useState(false);
+    const [type, setType] = useState('');
     let leave = false;
     // useEffect(() => {
     //     console.log(props);
@@ -74,12 +76,20 @@ function Item(props) {
         setItem(props.item);
     }, [props.item]);
     useEffect(() => {
+        if(props.item.Shadow) {
+            setType("fish");
+        } else {
+            setType("bug");
+        }
+        // setType(props.item);
+    }, [props.item]);
+    useEffect(() => {
         // console.log("collected")
         setCollected(props.collected);
     }, [props.collected]);
-    useEffect(() => {
-        console.log(collected)
-    }, [collected]);
+    // useEffect(() => {
+    //     console.log(collected)
+    // }, [collected]);
     useEffect(() => {
         setDonated(props.donated);
     }, [props.donated]);
@@ -98,7 +108,12 @@ function Item(props) {
             firebase.db.collection('users').doc(userData.authUser.uid).update({[name]:[val,donated]});
 
         } else {
-            firebase.db.collection('users').doc(userData.authUser.uid).update({[name]:[collected,val]});
+            if(type === "donated" && val) {
+                firebase.db.collection('users').doc(userData.authUser.uid).update({[name]:[val,val]});
+            } else {
+                firebase.db.collection('users').doc(userData.authUser.uid).update({[name]:[collected,val]});
+            }
+
         }
     }
 
@@ -143,7 +158,7 @@ function Item(props) {
 
     let avi = <Avatar className={styles.avatar}><FontAwesomeIcon icon={warning} alt="Switch light mode" size="xs" transform="up-2" title="Leaving end of month"/></Avatar>
   return (
-      <Card className={cx(styles.card, props.type)} elevation={0}>
+      <Card className={cx(styles.card, type)} elevation={0}>
           <CardHeader title={item.Name} disableTypography className={cx(styles.heading, "cardHeader")} avatar={leave ? avi : ''}/>
       <CardContent className={cx(styles.subheader, "cardInfo")}>
       <p className={styles.subheader}>{item.Value} Bells • {item.TimeString ? item.TimeString : ""}</p>
