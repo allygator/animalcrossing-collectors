@@ -166,7 +166,7 @@ function Item(props) {
       <Divider />
       <div id="extraInfo">
       <p>{item.Location}</p>
-      {props.type === "fish" ? <p>Shadow size: {item.Shadow}</p> : ""}
+      {item.Shadow ? <p>Shadow size: {item.Shadow}</p> : ""}
       </div>
       {userData ? <Divider /> : ''}
       {userData ? collections : ''}
