@@ -37,8 +37,12 @@ function Critters(props) {
     //Get specific critter data based on what the user selected
     useEffect(() => {
         let date = new Date();
+        let loc = "Months.";
+        if(!props.hemisphere) {
+            loc = "Southern.";
+        }
         let month = date.toLocaleString('default', {month: 'long'});
-        let monthQuery = "Months.".concat(month);
+        let monthQuery = loc+month;
         let timeQuery = "Time.".concat(date.getHours());
         var itemHolder = [];
         switch (props.type) {
@@ -85,7 +89,9 @@ function Critters(props) {
 
     return (
         <div className="content">
-            {userData ? <p id="full">Checking donated will automatically check collected as well</p> : ''}
+            {props.hemisphere ? <h3>Northern Hemisphere</h3> : <h3>Southern Hemisphere</h3>}
+            {userData ? <h3 id="full">Checking donated will automatically check collected as well</h3> : ''}
+
             <div className="available">
             {
                 critters

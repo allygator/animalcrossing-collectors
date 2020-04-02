@@ -10,16 +10,18 @@ import Checkbox from '@material-ui/core/Checkbox';
 function Main() {
     const userData = useContext(UserContext);
     const [type, setType] = useState(0);
-    const [mode, setMode] = useState(true);
+    const [lighting, setLight] = useState(true);
     const [hidden, setHidden] = useState(false);
-    const toggle = () => setMode(!mode);
+    const [sphere, setSphere] = useState(true);
+    const toggle = () => setLight(!lighting);
+    const hemisphere = () => setSphere(!sphere);
 
     function handleChange(e) {
         setHidden(e.target.checked);
     }
 
-    return (<div className={cx('main', mode && 'dark', !mode && 'light', !type && 'centered')}>
-        <Header toggle={toggle} mode={mode} size={!type}/>
+    return (<div className={cx('main', lighting && 'dark', !lighting && 'light', !type && 'centered')}>
+        <Header toggle={toggle} lighting={lighting} size={!type} sphereUp={hemisphere} sphere={sphere}/>
         <div className={type !== 0
                 ? "little info"
                 : 'info'}>
@@ -44,7 +46,7 @@ function Main() {
                 }
             </div>
         </div>
-        {type !== 0 ? <Critters type={type} hidden={hidden} /> : ''}
+        {type !== 0 ? <Critters type={type} hidden={hidden} hemisphere={sphere}/> : ''}
     </div>);
 }
 
