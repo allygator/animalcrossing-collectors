@@ -123,7 +123,7 @@ a {
         display: flex;
         justify-content: space-between;
         margin-top: 4px;
-        >div {
+        >div:not(#divider) {
             display: flex;
             // flex-direction: column;
             align-items: center;
@@ -146,6 +146,31 @@ a {
         }
     }
 
+}
+
+#login-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+    .inputs {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        width: 100%;
+    }
+    >.user-fields {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 3px;
+    }
+    #divider {
+        width: 1px;
+        background-color: $light-grey
+    }
 }
 
 #quick {
@@ -182,6 +207,16 @@ a {
     margin-right: 0;
 }
 
+@media (min-width: 706px) {
+    #login-container {
+        width: 90%;
+        >.user-fields {
+            width: 46%;
+            padding: 1.5%;
+        }
+    }
+}
+
 @media (max-width: 705px) {
     .main {
         &.centered {
@@ -193,6 +228,7 @@ a {
             }
         }
     }
+
     #header {
         width: unset !important;
         position: fixed;
@@ -203,6 +239,10 @@ a {
         h1 {
             display: none;
         }
+    }
+
+    #login-container {
+        flex-direction: column;
     }
 
     .info {
