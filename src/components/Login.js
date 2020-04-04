@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react';
 import critters from '../critters'
 import {FirebaseContext} from './Firebase';
-// import UserContext from './UserContext';
+import UserContext from './UserContext';
 import GoogleButton from 'react-google-button';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -14,27 +14,36 @@ import {Redirect} from 'react-router-dom';
 
 function Login() {
     const firebase = useContext(FirebaseContext);
-    // const userData = useContext(UserContext);
+    const userData = useContext(UserContext);
     const [user, setUser] = useState('');
     const [newUser, setNewUser] = useState({email: null, password: null});
     const [returnUser, setReturnUser] = useState({email: null, password: null});
     const [hemisphere, setSphere] = useState("northern");
     const [total, setTotal] = useState(critters);
+    const [error, setError] = useState({newEmail: false, newPass: false, returnEmail: false, returnPass: false, message: ''});
 
     const handleChangeIn = name => event => {
-        console.log(event.target.value);
+        if(error.returnEmail || error.returnPass) {
+            reset();
+        }
         setReturnUser({
             ...returnUser,
             [name]: event.target.value
         });
     };
     const handleChangeUp = name => event => {
-        console.log(event.target.value);
+        if(error.newEmail || error.newPass) {
+            reset();
+        }
         setNewUser({
             ...newUser,
             [name]: event.target.value
         });
     };
+
+    function reset() {
+        setError({newEmail: false, newPass: false, returnEmail: false, returnPass: false, message: ''});
+    }
 
     useEffect(() => {
         if (hemisphere === "northern") {
@@ -50,6 +59,12 @@ function Login() {
         }
 
     }, [hemisphere]);
+
+    useEffect(() => {
+        if(userData && userData.authUser) {
+            setUser(userData);
+        }
+    }, [userData]);
 
     const handleChange = (event) => {
         setSphere(event.target.value);
@@ -67,22 +82,70 @@ function Login() {
     };
 
     function signIn(email, pass) {
-        firebase.doSignInWithEmailAndPassword(email, pass).catch(error => {
-            console.log(error);
-        });
+        try {
+                firebase.doSignInWithEmailAndPassword(email, pass);
+        } catch(err) {
+            errorHandler('in', err);
+        }
     }
 
     function signUp(email, pass) {
-        console.log(total);
-        firebase.doCreateUserWithEmailAndPassword(email, pass).then(authUser => {
-            if (authUser.additionalUserInfo.isNewUser) {
-                if (firebase) {
-                    firebase.db.collection("users").doc(authUser.user.uid).set(total);
+        try {
+            firebase.doCreateUserWithEmailAndPassword(email, pass).then(authUser => {
+                if (authUser.additionalUserInfo.isNewUser) {
+                    if (firebase) {
+                        firebase.db.collection("users").doc(authUser.user.uid).set(total);
+                    }
                 }
-            }
-        }).catch(error => {
-            console.log(error);
-        });
+            }).catch(err => {
+                errorHandler('up', err);
+            });
+        } catch(err) {
+            errorHandler('up', err);
+        }
+    }
+
+    function errorHandler(type, err) {
+        let email;
+        let pass;
+        if(type === 'up') {
+            email = 'newEmail';
+            pass = 'newPass'
+        } else {
+            email = 'returnEmail';
+            pass = 'returnPass';
+        }
+        switch (err.code) {
+            case "auth/argument-error":
+                switch (err.message) {
+                    case 'createUserWithEmailAndPassword failed: First argument "email" must be a valid string.':
+                        setError({...error, [email]: true, message: 'Please enter an email address'});
+                        break;
+                    case 'createUserWithEmailAndPassword failed: Second argument "password" must be a valid string.':
+                        setError({...error, [pass]: true, message: 'Please enter a password'});
+                        break;
+                    case 'signInWithEmailAndPassword failed: First argument "email" must be a valid string.':
+                        setError({...error, [email]: true, message: 'Please enter an email address'});
+                        break;
+                    case 'signInWithEmailAndPassword failed: Second argument "password" must be a valid string.':
+                        setError({...error, [pass]: true, message: 'Please enter a password'});
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "auth/invalid-email":
+                setError({...error, [email]: true, message: 'Invalid email. Format: an@example.com'});
+                break;
+            case "auth/weak-password":
+                setError({...error, [pass]: true, message: 'Password should be at least 6 characters'});
+                break;
+            case "auth/email-already-in-use":
+                setError({...error, [email]: true, message: 'Looks like you have already signed up, please sign in.'});
+                break;
+            default:
+                break;
+        }
     }
 
     let display = <div id="login-container">
@@ -96,8 +159,10 @@ function Login() {
                 </RadioGroup>
             </FormControl>
             <div className="inputs">
-                <TextField id="new-email" label="Email" type="email" autoComplete="email" margin="normal" onChange={handleChangeUp("email")}/>
-                <TextField id="new-password" label="Password" type="password" autoComplete="current-password" onChange={handleChangeUp("password")} margin="normal"/>
+                <TextField id="new-email" label="Email" type="email" autoComplete="email" margin="normal" onChange={handleChangeUp("email")} error={error.newEmail}/>
+                <p id="newEmail" className={error.newEmail ? "error" : "hidden"}>{error.message}</p>
+                <TextField id="new-password" label="Password" type="password" autoComplete="current-password" onChange={handleChangeUp("password")} margin="normal"  error={error.newPass}/>
+                <p id="newEmail" className={error.newPass ? "error" : "hidden"}>{error.message}</p>
             </div>
             <Button variant="contained" onClick={() => signUp(newUser.email, newUser.password)}>Sign Up</Button>
             <p>Or</p>
@@ -107,8 +172,10 @@ function Login() {
         <div className="user-fields">
             <h2>Returning User?</h2>
             <div className="inputs">
-                <TextField id="return-email" label="Email" type="email" autoComplete="email" margin="normal" onChange={handleChangeIn("email")}/>
-                <TextField id="return-password" label="Password" type="password" autoComplete="current-password" margin="normal" onChange={handleChangeIn("password")}/>
+                <TextField id="return-email" label="Email" type="email" autoComplete="email" margin="normal" onChange={handleChangeIn("email")} error={error.returnEmail}/>
+                <p id="returnEmail" className={error.returnEmail ? "error" : "hidden"}>{error.message}</p>
+                <TextField id="return-password" label="Password" type="password" autoComplete="current-password" margin="normal" onChange={handleChangeIn("password")} error={error.returnPass}/>
+                <p id="returnPass" className={error.returnPass ? "error" : "hidden"}>{error.message}</p>
             </div>
             <Button variant="contained" onClick={() => signIn(returnUser.email, returnUser.password)}>Sign In</Button>
             <p>Or</p>
