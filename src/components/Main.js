@@ -27,6 +27,7 @@ function Main() {
                 : 'info'}>
             {type !== 0 ? '' : <h1>Welcome to AC:NH Critter Collector.</h1>}
             <h2>Select one of the quick options for critter availability right now.</h2>
+            <h3 className={userData ? "reduce hidden" : "reduce"}>Login to save what you have caught and donated.</h3>
             <div id="quick">
                 <Button variant="contained" onClick={() => setType(2)}>
                     <span className="reduce">Available&nbsp;</span>Bugs</Button>
