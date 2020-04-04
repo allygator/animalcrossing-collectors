@@ -26,8 +26,11 @@ function Main() {
     useEffect(() => {
         if(userData?.authUser) {
             let unsubscribe = firebase.db.collection('users').doc(userData.authUser.uid).onSnapshot(snapshot => {
-                if(sphere !== snapshot.data().sphere) {
-                    setSphere(snapshot.data().sphere);
+                if(!snapshot.data().sphere) {
+                } else {
+                    if(sphere !== snapshot.data().sphere) {
+                        setSphere(snapshot.data().sphere);
+                    }
                 }
             }, err => { console.log(err) })
                 return () => unsubscribe();
