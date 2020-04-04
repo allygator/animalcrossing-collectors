@@ -7,7 +7,7 @@ $light-grey:#979CB2;
 $cream: #EDECE1;
 $peach: #FFEBDD;
 $brown: #68403C;
-$warning: #7A212F;
+$warning: #ad3145;
 
 a {
     text-decoration: none;
@@ -70,27 +70,6 @@ a {
             color: $cream;
         }
     }
-
-    #header {
-        width: 98%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 0 1%;
-        h1 {
-            margin: 0.2em 0;
-        }
-        #signout, #signin {
-            margin-left: 4px;
-        }
-        #button-icons {
-            background-color: $light-grey;
-            height: 40px;
-            width: 40px;
-            margin: 0 4px;
-        }
-    }
-
     .little {
         display: flex;
         // flex-direction: column;
@@ -148,12 +127,38 @@ a {
 
 }
 
+#header {
+    width: 99%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5%;
+    h1 {
+        margin: 0.2em 0;
+    }
+    #signout, #signin {
+        margin-left: 4px;
+    }
+    .button-icons {
+        background-color: $light-grey;
+        height: 40px;
+        width: 40px;
+        margin: 0 4px;
+    }
+}
+
 .login {
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
     background-color: $cream;
+    .MuiFormLabel-root.Mui-error, .MuiInput-underline.Mui-error:after {
+        color: $warning;
+    }
+    .MuiInput-underline.Mui-error:after {
+        border-bottom-color: $warning;
+    }
 }
 
 #login-container {
@@ -221,6 +226,12 @@ a {
 
 .main .available .MuiCardHeader-avatar {
     margin-right: 0;
+}
+
+.error {
+    color: $warning;
+    font-size: 0.8em;
+    margin: 0;
 }
 
 @media (min-width: 706px) {

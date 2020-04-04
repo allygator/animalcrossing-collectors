@@ -3,6 +3,7 @@ import critters from '../critters'
 import {FirebaseContext} from './Firebase';
 import UserContext from './UserContext';
 import GoogleButton from 'react-google-button';
+import { withStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
@@ -10,7 +11,17 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import {Redirect} from 'react-router-dom';
+import {Redirect, Link} from 'react-router-dom';
+
+const BrownRadio = withStyles({
+  root: {
+    "&$checked": {
+      color: "#68403C"
+    }
+  },
+  checked: {}
+})(props => <Radio color="default" {...props} />);
+
 
 function Login() {
     const firebase = useContext(FirebaseContext);
@@ -154,8 +165,8 @@ function Login() {
             <FormControl component="fieldset">
                 <FormLabel component="legend">Select your in-game hemisphere</FormLabel>
                 <RadioGroup aria-label="Hemisphere" name="Hemisphere" value={hemisphere} onChange={handleChange}>
-                    <FormControlLabel value="northern" control={<Radio />} label="Northern"/>
-                    <FormControlLabel value="southern" control={<Radio />} label="Southern"/>
+                    <FormControlLabel value="northern" control={<BrownRadio />} label="Northern"/>
+                    <FormControlLabel value="southern" control={<BrownRadio />} label="Southern"/>
                 </RadioGroup>
             </FormControl>
             <div className="inputs">
@@ -184,6 +195,7 @@ function Login() {
     </div>
 
     return (<div className="login">
+        <div id="header"><Link to='/'><Button variant="contained">Home</Button></Link></div>
         <h1>Login to track your Animal Crossing critter collection</h1>
         {
             user

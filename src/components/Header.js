@@ -22,12 +22,12 @@ function Header(props) {
         <div id="header">
             {!props.size ? <h1>AC:NH Critter Collector</h1> : ''}
             <div id="buttons">
-            <IconButton onClick={props.toggle} id="button-icons">
+            <IconButton onClick={props.toggle} className="button-icons">
                 <FontAwesomeIcon icon={props.lighting
                         ? lightOff
                         : lightOn} title="Switch light mode" transform="up-3"/>
             </IconButton>
-            <IconButton onClick={props.sphereUp} id="button-icons">
+            <IconButton onClick={props.sphereUp} className="button-icons">
                 <FontAwesomeIcon icon={props.sphere
                         ? north
                         : south} title={props.sphere ? 'Switch to Southern Hemisphere' : 'Switch to Northern Hemisphere'}  transform="up-3"/>
