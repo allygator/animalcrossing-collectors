@@ -72,7 +72,7 @@ function Login() {
     }, [hemisphere]);
 
     useEffect(() => {
-        if(userData && userData.authUser) {
+        if(userData?.authUser) {
             setUser(userData);
         }
     }, [userData]);

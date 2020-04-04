@@ -23,9 +23,8 @@ function Critters(props) {
 
     //Get what the user has already collected/donated
     useEffect(() => {
-        if(userData && userData.authUser) {
+        if(userData?.authUser) {
             let unsubscribe = firebase.db.collection('users').doc(userData.authUser.uid).onSnapshot(doc => {
-                // console.log("got data");
                 setCollection(doc.data());
             }, err => { console.log(err) })
             return () => unsubscribe();
