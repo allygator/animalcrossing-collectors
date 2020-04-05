@@ -59,7 +59,7 @@ function Critters(props) {
                         })
                     }).then(function() {
                         setCritters(itemHolder);
-
+                        props.toggleLoading(false);
                     });
                 });
                 break;
@@ -82,6 +82,7 @@ function Critters(props) {
                     });
                 }).then(function() {
                     setCritters(itemHolder);
+                    props.toggleLoading(false);
                 });
                 break;
             default:

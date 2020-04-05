@@ -58,9 +58,9 @@ function Main(props) {
             <div id="quick">
                 <Button variant="contained" onClick={() => {setType(2); toggleLoading(true);}}>
                     <span className="reduce">Available&nbsp;</span>Bugs</Button>
-                <Button variant="contained" onClick={() => setType(3)}>
+                <Button variant="contained" onClick={() => {setType(3); toggleLoading(true);}}>
                     <span className="reduce">Available&nbsp;</span>Fish</Button>
-                <Button variant="contained" onClick={() => setType(1)}>All<span className="reduce">&nbsp;Available</span>
+                <Button variant="contained" onClick={() => {setType(1); toggleLoading(true);}}>All<span className="reduce">&nbsp;Available</span>
                 </Button>
                 {
                     userData

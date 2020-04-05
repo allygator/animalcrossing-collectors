@@ -314,8 +314,8 @@ a {
     }
     .critter {
         opacity: 1;
-        transition: opacity 1.5s;
-        animation:view 3s ease-in 1;
+        transition: opacity 0.5s;
+        animation:view 600ms ease-in 1;
     }
 }
 
