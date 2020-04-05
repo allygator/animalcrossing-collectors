@@ -31,8 +31,10 @@ function App() {
     <Router>
       <UserContext.Provider value={state}>
           <Switch>
-              <Route path='/' exact component={Main}/>
-              <Route path='/login' component={Login}/>
+
+              <Route path='/login'><Login /></Route>
+              <Route path='/bugs'><Main thing="test"/></Route>
+              <Route path='/' exact><Main /></Route>
           </Switch>
 
       </UserContext.Provider>
