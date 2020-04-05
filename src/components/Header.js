@@ -7,6 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLightbulb as lightOn} from '@fortawesome/free-solid-svg-icons';
 import {faLightbulb as lightOff} from '@fortawesome/free-regular-svg-icons';
+import {faGlobeAmericas as north} from '@fortawesome/free-solid-svg-icons';
+import {faGlobeAsia as south} from '@fortawesome/free-solid-svg-icons';
 
 function Header(props) {
     const firebase = useContext(FirebaseContext);
@@ -20,10 +22,15 @@ function Header(props) {
         <div id="header">
             {!props.size ? <h1>AC:NH Critter Collector</h1> : ''}
             <div id="buttons">
-            <IconButton onClick={props.toggle} id="lights">
-                <FontAwesomeIcon icon={props.mode
+            <IconButton onClick={props.toggle} className="button-icons">
+                <FontAwesomeIcon icon={props.lighting
                         ? lightOff
                         : lightOn} title="Switch light mode" transform="up-3"/>
+            </IconButton>
+            <IconButton onClick={props.sphereUp} className="button-icons">
+                <FontAwesomeIcon icon={props.sphere
+                        ? north
+                        : south} title={props.sphere ? 'Switch to Southern Hemisphere' : 'Switch to Northern Hemisphere'}  transform="up-3"/>
             </IconButton>
             {
                 userData

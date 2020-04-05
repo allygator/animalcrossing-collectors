@@ -1,4 +1,5 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
+import {FirebaseContext} from './Firebase';
 import UserContext from './UserContext';
 import Header from './Header';
 import Critters from './Critters';
@@ -8,23 +9,48 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 function Main() {
+    const firebase = useContext(FirebaseContext);
     const userData = useContext(UserContext);
     const [type, setType] = useState(0);
-    const [mode, setMode] = useState(true);
+    const [lighting, setLight] = useState(true);
     const [hidden, setHidden] = useState(false);
-    const toggle = () => setMode(!mode);
+    const [sphere, setSphere] = useState(true);
+    const toggle = () => setLight(!lighting);
+    const hemisphere = () => {
+        if(userData?.authUser) {
+            firebase.db.collection('users').doc(userData.authUser.uid).update({sphere: !sphere});
+        }
+        setSphere(!sphere)
+    };
+
+    useEffect(() => {
+        if(userData?.authUser) {
+            let unsubscribe = firebase.db.collection('users').doc(userData.authUser.uid).onSnapshot(snapshot => {
+                if(!snapshot.data().sphere) {
+                } else {
+                    if(sphere !== snapshot.data().sphere) {
+                        setSphere(snapshot.data().sphere);
+                    }
+                }
+            }, err => { console.log(err) })
+                return () => unsubscribe();
+        } else {
+            return;
+        }
+    }, [firebase, userData, sphere]);
 
     function handleChange(e) {
         setHidden(e.target.checked);
     }
 
-    return (<div className={cx('main', mode && 'dark', !mode && 'light', !type && 'centered')}>
-        <Header toggle={toggle} mode={mode} size={!type}/>
+    return (<div className={cx('main', lighting && 'dark', !lighting && 'light', !type && 'centered')}>
+        <Header toggle={toggle} lighting={lighting} size={!type} sphereUp={hemisphere} sphere={sphere}/>
         <div className={type !== 0
                 ? "little info"
                 : 'info'}>
             {type !== 0 ? '' : <h1>Welcome to AC:NH Critter Collector.</h1>}
             <h2>Select one of the quick options for critter availability right now.</h2>
+            <h3 className={userData ? "reduce hidden" : "reduce"}>Login to save what you have caught and donated.</h3>
             <div id="quick">
                 <Button variant="contained" onClick={() => setType(2)}>
                     <span className="reduce">Available&nbsp;</span>Bugs</Button>
@@ -44,7 +70,7 @@ function Main() {
                 }
             </div>
         </div>
-        {type !== 0 ? <Critters type={type} hidden={hidden} /> : ''}
+        {type !== 0 ? <Critters type={type} hidden={hidden} hemisphere={sphere}/> : ''}
     </div>);
 }
 
