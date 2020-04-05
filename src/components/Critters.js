@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import {FirebaseContext} from './Firebase';
 import UserContext from './UserContext';
 import Item from './Item';
-// import Loadingsvg from './svg/Loadingsvg';
+import Loadingsvg from './svg/Loadingsvg';
 // import Header from './Header';
 //  import {Link} from 'react-router-dom';
 // import Button from '@material-ui/core/Button';
@@ -96,7 +96,7 @@ function Critters(props) {
             {userData ? <h3 id="full">Checking donated will automatically check collected as well</h3> : ''}
 
             <div className="available">
-                {props.loading ? "loading" : ''}
+                {props.loading ? <Loadingsvg /> : ''}
             {
                 critters
                     ? (critters.map(function(item) {

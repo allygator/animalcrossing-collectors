@@ -16,6 +16,7 @@ a {
 
 .main {
     display: flex;
+    overflow: hidden;
 
     &.centered {
         justify-content: center;
@@ -252,39 +253,47 @@ a {
 }
 
 #loading {
-    height: 200px;
+    height: 180px;
     overflow: hidden;
-
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    // transform: translate(50%);
     svg {
         height: 400px;
-        #Planet {
-            -webkit-animation:spin 4s linear infinite;
-            -moz-animation:spin 4s linear infinite;
-            animation:spin 4s linear infinite;
+        #planet {
+            // transform:rotate(360deg);
+            -webkit-animation:spin 10s linear infinite;
+            -moz-animation:spin 10s linear infinite;
+            animation:spin 10s linear infinite;
+            transform-origin: 108.5px 148.671px;
+        }
+        #critter {
+            transform: rotate(3deg);
         }
 
     }
 
-    .blue {
+    .blue, .cls-1 {
         fill: $light-blue;
     }
 
-    .green {
+    .green, .cls-2 {
         fill: $light-green;
     }
 
-    .brown {
+    .brown, .cls-3 {
         fill: $brown;
     }
 
-    .tan {
+    .tan, .cls-4 {
         fill: $tan;
     }
 }
 
-@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+// @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+// @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { transform:rotate(360deg); }};
 
 .available {
     display: flex;
