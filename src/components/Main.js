@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import cx from 'clsx';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Loadingsvg from './svg/Loadingsvg';
 
 function Main(props) {
     const firebase = useContext(FirebaseContext);
@@ -19,7 +18,6 @@ function Main(props) {
     const [loading, setLoading] = useState();
     const toggleLoading = (direction) =>  {
         setLoading(direction);
-        console.log(loading);
     };
     const toggle = () => setLight(!lighting);
     const hemisphere = () => {
@@ -51,8 +49,6 @@ function Main(props) {
 
     return (<div className={cx('main', lighting && 'dark', !lighting && 'light', !type && 'centered')}>
         <Header toggle={toggle} lighting={lighting} size={!type} sphereUp={hemisphere} sphere={sphere}/>
-        <Loadingsvg />
-
         <div className={type !== 0
                 ? "little info"
                 : 'info'}>

@@ -17,6 +17,10 @@ a {
 .main {
     display: flex;
     overflow: hidden;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    transition: background-color 1.5s, color .5s;
 
     &.centered {
         justify-content: center;
@@ -38,9 +42,6 @@ a {
             margin: auto;
         }
     }
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
 
     &.light {
         color: $dark-grey;
@@ -122,36 +123,36 @@ a {
             background-color: $warning;
         }
     }
+}
 
-    #collections {
+#collections {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+
+    > div:not(#divider) {
         display: flex;
-        justify-content: space-between;
-        margin-top: 4px;
-
-        > div:not(#divider) {
-            display: flex;
-            // flex-direction: column;
-            align-items: center;
-            justify-content: space-around;
-        }
-
-        .MuiAvatar-root {
-            width: 25px;
-            height: 25px;
-        }
-
-        .MuiIconButton-root {
-            padding: 2px 1px 2px 5px;
-        }
+        // flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
     }
 
-    #extraInfo {
-        display: flex;
-        justify-content: space-between;
+    .MuiAvatar-root {
+        width: 25px;
+        height: 25px;
+    }
 
-        p {
-            margin: 0.5em 0;
-        }
+    .MuiIconButton-root {
+        padding: 2px 1px 2px 5px;
+    }
+}
+
+#extraInfo {
+    display: flex;
+    justify-content: space-between;
+
+    p {
+        margin: 0.5em 0;
     }
 }
 
@@ -261,17 +262,18 @@ a {
     // transform: translate(50%);
     svg {
         height: 400px;
+        opacity: 1;
+        animation: out 2s ease-out infinite;
+        transition: opacity 1.5s;
         #planet {
-            // transform:rotate(360deg);
             -webkit-animation:spin 10s linear infinite;
             -moz-animation:spin 10s linear infinite;
-            animation:spin 10s linear infinite;
+            animation:spin 5s linear infinite;
             transform-origin: 108.5px 148.671px;
         }
         #critter {
             transform: rotate(3deg);
         }
-
     }
 
     .blue, .cls-1 {
@@ -291,15 +293,30 @@ a {
     }
 }
 
-// @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-// @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { transform:rotate(360deg); }};
+@keyframes view {
+    0% { opacity: 0 }
+    100% {opacity: 1}};
+@keyframes out {
+    0% { opacity: 1 }
+    100% {opacity: 0}};
 
 .available {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    >.MuiPaper-root {
+        transition: background-color 1.5s, color .5s;
+        opacity: 0;
+    }
+    .critter {
+        opacity: 1;
+        transition: opacity 1.5s;
+        animation:view 3s ease-in 1;
+    }
 }
 
 .main .available .MuiCardHeader-root {
