@@ -345,7 +345,7 @@ a {
 }
 
 @for $i from 1 to 80 {
-    .available .critter:nth-child(#{$i}) { animation-duration: $i * 75ms + 15ms; }
+    .available .critter:nth-child(#{$i}) { animation-duration: $i * 15ms + 15ms; }
 }
 
 .main .available .MuiCardHeader-root {
