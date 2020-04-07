@@ -26,12 +26,13 @@ a {
         justify-content: center;
 
         #header {
-            width: 100%;
+            width: 98%;
             // margin: 0;
-            margin: 0 6px;
+            padding: 0 6px;
             position: fixed;
             top: 2px;
-            // left: 2px;
+            left: 0;
+            z-index: 2;
         }
 
         .info {
@@ -39,7 +40,7 @@ a {
         }
 
         #quick {
-            margin: auto;
+            width: 100%;
         }
     }
 
@@ -62,6 +63,9 @@ a {
 
         .MuiAvatar-circle.on {
             background-color: $brown;
+        }
+        #loading-container {
+            background-color: $cream;
         }
     }
 
@@ -89,6 +93,9 @@ a {
         .MuiCheckbox-root {
             color: $cream;
         }
+        #loading-container {
+            background-color: $dark-grey;
+        }
     }
 
     .little {
@@ -99,7 +106,6 @@ a {
         align-self: stretch;
         width: 90%;
         margin: 8px auto;
-
         h1 {
             font-size: 1.2em;
             margin: 0.2em;
@@ -123,6 +129,10 @@ a {
             background-color: $warning;
         }
     }
+}
+
+.info {
+    transition: display 1.5s;
 }
 
 #collections {
@@ -157,14 +167,17 @@ a {
 }
 
 #header {
-    width: 99%;
+    width: 98%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0.5%;
-
+    a {
+        color: white;
+    }
     h1 {
         margin: 0.2em 0;
+        transition: display 1.5s;
     }
 
     #signin,
@@ -203,7 +216,6 @@ a {
     width: 80%;
     margin: auto;
     justify-content: space-evenly;
-
     .inputs {
         display: flex;
         flex-wrap: wrap;
@@ -253,26 +265,39 @@ a {
     }
 }
 
+#loading-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    transition: opacity 0.8s;
+    animation: out 2s ease-out 1;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #loading {
-    height: 180px;
+    height: 145px;
     overflow: hidden;
     width: 100%;
     display: flex;
     justify-content: center;
-    // transform: translate(50%);
     svg {
         height: 400px;
         opacity: 1;
-        animation: out 2s ease-out infinite;
-        transition: opacity 1.5s;
+        animation: out 2s ease-out 1;
         #planet {
-            -webkit-animation:spin 10s linear infinite;
-            -moz-animation:spin 10s linear infinite;
-            animation:spin 5s linear infinite;
+            -webkit-animation:spin 3s linear infinite;
+            -moz-animation:spin 3s linear infinite;
+            animation:spin 3s linear infinite;
             transform-origin: 108.5px 148.671px;
         }
         #critter {
-            transform: rotate(3deg);
+            animation:wiggle 3s linear infinite;
+            transform-origin: 108.5px 24.358px;
         }
     }
 
@@ -296,6 +321,7 @@ a {
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { transform:rotate(360deg); }};
+@keyframes wiggle { 0% { transform:rotate(0deg) } 25% {transform:rotate(-2deg)} 50% { transform:rotate(0deg) } 75% { transform:rotate(2deg);} 100% {transform: rotate(0deg)}};
 @keyframes view {
     0% { opacity: 0 }
     };
@@ -308,11 +334,18 @@ a {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s;
     .critter {
         opacity: 1;
         transition: opacity 0.5s, background-color 600ms, color 600ms;
         animation:view 600ms ease-in 1;
+        max-width: 250px;
     }
+}
+
+@for $i from 1 to 80 {
+    .available .critter:nth-child(#{$i}) { animation-duration: $i * 75ms + 15ms; }
 }
 
 .main .available .MuiCardHeader-root {
@@ -405,4 +438,32 @@ a {
 
 .hidden {
     display: none !important;
+}
+
+.loading-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: background-color 750ms, color 750ms;
+    #header {
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+    &.light {
+        color: $dark-grey;
+        background-color: $cream;
+    }
+
+    &.dark {
+        background-color: #292C3D;
+        color: $cream;
+    }
+    #loading {
+        svg {
+            animation: unset;
+        }
+    }
 }

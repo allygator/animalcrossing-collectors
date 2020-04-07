@@ -2,6 +2,7 @@ import React, {useEffect, useContext, useState}  from 'react';
 import './App.scss';
 import Login from './components/Login';
 import Main from './components/Main';
+import Loading from './components/Loading';
 import UserContext  from './components/UserContext';
 import  { FirebaseContext } from './components/Firebase';
 import  {BrowserRouter as Router, Route, Switch, } from 'react-router-dom';
@@ -33,7 +34,7 @@ function App() {
           <Switch>
 
               <Route path='/login'><Login /></Route>
-              <Route path='/bugs'><Main thing="test"/></Route>
+              <Route path='/loading'><Loading /></Route>
               <Route path='/' exact><Main /></Route>
           </Switch>
 

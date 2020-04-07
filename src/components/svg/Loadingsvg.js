@@ -1,8 +1,8 @@
 import React from 'react';
 
-function Loadingsvg() {
-
+function Loadingsvg(props) {
     return (
+        <div id={props.show ? "" : "loading-container"}>
         <div id="loading">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 260">
                 <g id="planet">
@@ -26,6 +26,7 @@ function Loadingsvg() {
                     <circle className="brown" cx="132.53" cy="19.39" r="1.41"/>
                 </g>
             </svg>
+        </div>
         </div>
     );
 }

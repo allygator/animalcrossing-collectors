@@ -48,6 +48,7 @@ function Main(props) {
     }
 
     return (<div className={cx('main', lighting && 'dark', !lighting && 'light', !type && 'centered')}>
+
         <Header toggle={toggle} lighting={lighting} size={!type} sphereUp={hemisphere} sphere={sphere}/>
         <div className={type !== 0
                 ? "little info"
