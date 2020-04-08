@@ -159,7 +159,7 @@ function Item(props) {
 
     let avi = <Avatar className={styles.avatar}><FontAwesomeIcon icon={warning} alt="Switch light mode" size="xs" transform="up-2" title="Leaving end of month"/></Avatar>
   return (
-      <Card className={cx(styles.card, type)} elevation={0}>
+      <Card className={cx(styles.card, type, 'critter')} elevation={0}>
           <CardHeader title={item.Name} disableTypography className={cx(styles.heading, "cardHeader")} avatar={leave ? avi : ''}/>
       <CardContent className={cx(styles.subheader, "cardInfo")}>
       <p className={styles.subheader}>{item.Value} Bells • {item.TimeString ? item.TimeString : ""}</p>

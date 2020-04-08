@@ -8,13 +8,17 @@ import cx from 'clsx';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-function Main() {
+function Main(props) {
     const firebase = useContext(FirebaseContext);
     const userData = useContext(UserContext);
     const [type, setType] = useState(0);
     const [lighting, setLight] = useState(true);
     const [hidden, setHidden] = useState(false);
     const [sphere, setSphere] = useState(true);
+    const [loading, setLoading] = useState();
+    const toggleLoading = (direction) =>  {
+        setLoading(direction);
+    };
     const toggle = () => setLight(!lighting);
     const hemisphere = () => {
         if(userData?.authUser) {
@@ -44,6 +48,7 @@ function Main() {
     }
 
     return (<div className={cx('main', lighting && 'dark', !lighting && 'light', !type && 'centered')}>
+
         <Header toggle={toggle} lighting={lighting} size={!type} sphereUp={hemisphere} sphere={sphere}/>
         <div className={type !== 0
                 ? "little info"
@@ -52,11 +57,11 @@ function Main() {
             <h2>Select one of the quick options for critter availability right now.</h2>
             <h3 className={userData ? "reduce hidden" : "reduce"}>Login to save what you have caught and donated.</h3>
             <div id="quick">
-                <Button variant="contained" onClick={() => setType(2)}>
+                <Button variant="contained" onClick={() => {setType(2); toggleLoading(true);}}>
                     <span className="reduce">Available&nbsp;</span>Bugs</Button>
-                <Button variant="contained" onClick={() => setType(3)}>
+                <Button variant="contained" onClick={() => {setType(3); toggleLoading(true);}}>
                     <span className="reduce">Available&nbsp;</span>Fish</Button>
-                <Button variant="contained" onClick={() => setType(1)}>All<span className="reduce">&nbsp;Available</span>
+                <Button variant="contained" onClick={() => {setType(1); toggleLoading(true);}}>All<span className="reduce">&nbsp;Available</span>
                 </Button>
                 {
                     userData
@@ -70,7 +75,7 @@ function Main() {
                 }
             </div>
         </div>
-        {type !== 0 ? <Critters type={type} hidden={hidden} hemisphere={sphere}/> : ''}
+        {type !== 0 ? <Critters type={type} hidden={hidden} hemisphere={sphere} toggleLoading={toggleLoading} loading={loading}/> : ''}
     </div>);
 }
 

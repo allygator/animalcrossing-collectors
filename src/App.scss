@@ -1,12 +1,13 @@
-$dark-green:#255B47;
-$light-green:#B3F3E3;
+$dark-green: #255B47;
+$light-green: #B3F3E3;
 $dark-blue: #32637A;
 $light-blue: #8AD0E0;
 $dark-grey: #292C3D;
-$light-grey:#979CB2;
+$light-grey: #979CB2;
 $cream: #EDECE1;
 $peach: #FFEBDD;
-$brown: #68403C;
+$tan: #b7a07e;
+$brown: #493d2a;
 $warning: #ad3145;
 
 a {
@@ -15,61 +16,88 @@ a {
 
 .main {
     display: flex;
-    &.centered {
-        justify-content: center;
-        #header {
-            width: 100%;
-            // margin: 0;
-            margin: 0 6px;
-            position: fixed;
-            top: 2px;
-            // left: 2px;
-        }
-        .info {
-            width: 60%;
-        }
-        #quick {
-            margin: auto;
-        }
-    }
+    overflow: hidden;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    transition: background-color 750ms, color 750ms;
+
+    &.centered {
+        justify-content: center;
+
+        #header {
+            width: 98%;
+            // margin: 0;
+            padding: 0 6px;
+            position: fixed;
+            top: 2px;
+            left: 0;
+            z-index: 2;
+        }
+
+        .info {
+            width: 60%;
+        }
+
+        #quick {
+            width: 100%;
+        }
+    }
+
     &.light {
         color: $dark-grey;
         background-color: $cream;
+
         .bug {
             background-color: $light-green;
         }
+
         .fish {
             background-color: $light-blue;
         }
-        .MuiCardHeader-root, .MuiCardContent-root {
+
+        .MuiCardContent-root,
+        .MuiCardHeader-root {
             color: $dark-grey;
         }
+
         .MuiAvatar-circle.on {
             background-color: $brown;
         }
+        #loading-container {
+            background-color: $cream;
+        }
     }
+
     &.dark {
         background-color: #292C3D;
         color: $cream;
+
         .bug {
             background-color: $dark-green;
         }
+
         .fish {
             background-color: $dark-blue;
         }
-        .MuiCardHeader-root, .MuiCardContent-root {
+
+        .MuiCardContent-root,
+        .MuiCardHeader-root {
             color: $cream;
         }
+
         .MuiAvatar-circle.on {
-            background-color:$brown;
+            background-color: $brown;
         }
+
         .MuiCheckbox-root {
             color: $cream;
         }
+        #loading-container {
+            background-color: $dark-grey;
+        }
     }
+
     .little {
         display: flex;
         // flex-direction: column;
@@ -82,6 +110,7 @@ a {
             font-size: 1.2em;
             margin: 0.2em;
         }
+
         h2 {
             font-size: 1em;
             margin: 0.2em;
@@ -91,54 +120,71 @@ a {
     .MuiCardContent-root:last-child {
         padding-bottom: 8px;
     }
+
     .MuiAvatar-root {
         width: 30px;
         height: 30px;
+
         &.warning {
             background-color: $warning;
         }
     }
-    #collections {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 4px;
-        >div:not(#divider) {
-            display: flex;
-            // flex-direction: column;
-            align-items: center;
-            justify-content: space-around;
-        }
-        .MuiAvatar-root {
-            width: 25px;
-            height: 25px;
+}
 
-        }
-        .MuiIconButton-root {
-            padding: 2px 1px 2px 5px;
-        }
-    }
-    #extraInfo {
+.info {
+    transition: display 1.5s;
+}
+
+#collections {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+
+    > div:not(#divider) {
         display: flex;
-        justify-content: space-between;
-        p {
-            margin: 0.5em 0;
-        }
+        // flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
     }
 
+    .MuiAvatar-root {
+        width: 25px;
+        height: 25px;
+    }
+
+    .MuiIconButton-root {
+        padding: 2px 1px 2px 5px;
+    }
+}
+
+#extraInfo {
+    display: flex;
+    justify-content: space-between;
+
+    p {
+        margin: 0.5em 0;
+    }
 }
 
 #header {
-    width: 99%;
+    width: 98%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0.5%;
+    a {
+        color: white;
+    }
     h1 {
         margin: 0.2em 0;
+        transition: display 1.5s;
     }
-    #signout, #signin {
+
+    #signin,
+    #signout {
         margin-left: 4px;
     }
+
     .button-icons {
         background-color: $light-grey;
         height: 40px;
@@ -153,9 +199,12 @@ a {
     align-items: center;
     min-height: 100vh;
     background-color: $cream;
-    .MuiFormLabel-root.Mui-error, .MuiInput-underline.Mui-error:after {
+
+    .MuiFormLabel-root.Mui-error,
+    .MuiInput-underline.Mui-error:after {
         color: $warning;
     }
+
     .MuiInput-underline.Mui-error:after {
         border-bottom-color: $warning;
     }
@@ -173,6 +222,7 @@ a {
         flex-direction: column;
         width: 100%;
     }
+
     .user-fields {
         display: flex;
         justify-content: center;
@@ -182,15 +232,18 @@ a {
         border-radius: 10px;
         box-shadow: 2px 2px 8px $light-grey;
     }
-    .user-fields:nth-child(1){
+
+    .user-fields:nth-child(1) {
         background-color: $light-green;
     }
-    .user-fields:nth-child(3){
+
+    .user-fields:nth-child(3) {
         background-color: $light-blue;
     }
+
     #divider {
         width: 1px;
-        background-color: $light-grey
+        background-color: $light-grey;
     }
 }
 
@@ -198,7 +251,6 @@ a {
     display: flex;
     justify-content: space-between;
     width: 80%;
-
 }
 
 .content {
@@ -207,16 +259,93 @@ a {
     flex-direction: column;
     align-items: center;
     padding-bottom: 40px;
+
     h3 {
         margin: 0.34em 0;
     }
 }
+
+#loading-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    transition: opacity 0.8s;
+    animation: out 2s ease-out 1;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loading {
+    height: 145px;
+    overflow: hidden;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    svg {
+        height: 400px;
+        opacity: 1;
+        animation: out 2s ease-out 1;
+        #planet {
+            -webkit-animation:spin 3s linear infinite;
+            -moz-animation:spin 3s linear infinite;
+            animation:spin 3s linear infinite;
+            transform-origin: 108.5px 148.671px;
+        }
+        #critter {
+            animation:wiggle 3s linear infinite;
+            transform-origin: 108.5px 24.358px;
+        }
+    }
+
+    .blue, .cls-1 {
+        fill: $light-blue;
+    }
+
+    .green, .cls-2 {
+        fill: $light-green;
+    }
+
+    .brown, .cls-3 {
+        fill: $brown;
+    }
+
+    .tan, .cls-4 {
+        fill: $tan;
+    }
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { transform:rotate(360deg); }};
+@keyframes wiggle { 0% { transform:rotate(0deg) } 25% {transform:rotate(-2deg)} 50% { transform:rotate(0deg) } 75% { transform:rotate(2deg);} 100% {transform: rotate(0deg)}};
+@keyframes view {
+    0% { opacity: 0 }
+    };
+@keyframes out {
+    0% { opacity: 1 }
+    100% {opacity: 0}};
 
 .available {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s;
+    .critter {
+        opacity: 1;
+        transition: opacity 0.5s, background-color 600ms, color 600ms;
+        animation:view 600ms ease-in 1;
+        max-width: 250px;
+    }
+}
+
+@for $i from 1 to 80 {
+    .available .critter:nth-child(#{$i}) { animation-duration: $i * 15ms + 15ms; }
 }
 
 .main .available .MuiCardHeader-root {
@@ -233,17 +362,16 @@ a {
     font-size: 0.8em;
     margin: 0;
 }
-
 @media (min-width: 706px) {
     #login-container {
         width: 90%;
-        >.user-fields {
+
+        > .user-fields {
             width: 36%;
             padding: 1.5%;
         }
     }
 }
-
 @media (max-width: 705px) {
     .main {
         &.centered {
@@ -263,6 +391,7 @@ a {
         bottom: 2px;
         right: 2px;
         z-index: 1;
+
         h1 {
             display: none;
         }
@@ -270,18 +399,18 @@ a {
 
     #login-container {
         flex-direction: column;
+
         .user-fields {
             margin: 1% 0;
             padding: 3%;
         }
     }
 
-
-
     .info {
         width: 80%;
         margin: auto;
     }
+
     .little {
         flex-direction: column;
         margin: 0 10px;
@@ -296,6 +425,7 @@ a {
         width: 95%;
         align-items: center;
         flex-wrap: wrap;
+
         button {
             margin: 2px 0;
         }
@@ -308,4 +438,32 @@ a {
 
 .hidden {
     display: none !important;
+}
+
+.loading-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: background-color 750ms, color 750ms;
+    #header {
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+    &.light {
+        color: $dark-grey;
+        background-color: $cream;
+    }
+
+    &.dark {
+        background-color: #292C3D;
+        color: $cream;
+    }
+    #loading {
+        svg {
+            animation: unset;
+        }
+    }
 }
