@@ -54,8 +54,9 @@ function Main(props) {
                 ? "little info"
                 : 'info'}>
             {type !== 0 ? '' : <h1>Welcome to AC:NH Critter Collector.</h1>}
-            <h2>Select one of the quick options for critter availability right now.</h2>
+            <h2 className={type !== 0 ? 'hidden' : ''}>Select one of the quick options for critter availability right now.</h2>
             <h3 className={userData ? "reduce hidden" : "reduce"}>Login to save what you have caught and donated.</h3>
+            <p className={type !== 0 ? 'hidden' : ''}>Click the globe at the top to switch hemispheres.</p>
             <div id="quick">
                 <Button variant="contained" onClick={() => {setType(2); toggleLoading(true);}}>
                     <span className="reduce">Available&nbsp;</span>Bugs</Button>

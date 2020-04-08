@@ -95,7 +95,7 @@ function Critters(props) {
         <div className="content">
 
             {props.hemisphere ? <h3>Northern Hemisphere</h3> : <h3>Southern Hemisphere</h3>}
-            {userData ? <h3 id="full">Checking donated will automatically check collected as well</h3> : ''}
+            {userData ? <h3 id="full">Marking donated will automatically mark collected as well</h3> : ''}
             {props.loading ? <Loadingsvg /> : ''}
             <div className={cx("available", props.loading && 'hidden')}>
             {
