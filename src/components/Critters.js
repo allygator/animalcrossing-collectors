@@ -3,6 +3,7 @@ import {FirebaseContext} from './Firebase';
 import UserContext from './UserContext';
 import Item from './Item';
 import Loadingsvg from './svg/Loadingsvg';
+import cx from 'clsx';
 // import Header from './Header';
 //  import {Link} from 'react-router-dom';
 // import Button from '@material-ui/core/Button';
@@ -95,8 +96,8 @@ function Critters(props) {
 
             {props.hemisphere ? <h3>Northern Hemisphere</h3> : <h3>Southern Hemisphere</h3>}
             {userData ? <h3 id="full">Checking donated will automatically check collected as well</h3> : ''}
-            <div className="available">
-                {props.loading ? <Loadingsvg /> : ''}
+            {props.loading ? <Loadingsvg /> : ''}
+            <div className={cx("available", props.loading && 'hidden')}>
             {
                 critters
                     ? (critters.map(function(item) {
