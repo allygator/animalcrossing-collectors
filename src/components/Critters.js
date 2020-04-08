@@ -86,6 +86,22 @@ function Critters(props) {
                     props.toggleLoading(false);
                 });
                 break;
+            case 4:
+                firebase.db.collection('bugs').where(monthQuery, "==", true).get().then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {
+                        itemHolder.push(doc.data());
+                    });
+                }).then(function() {
+                    firebase.db.collection('fish').where(monthQuery, "==", true).get().then(function(querySnapshot) {
+                        querySnapshot.forEach(function(doc) {
+                            itemHolder.push(doc.data());
+                        })
+                    }).then(function() {
+                        setCritters(itemHolder);
+                        props.toggleLoading(false);
+                    });
+                });
+                break;
             default:
                 break;
         }

@@ -64,6 +64,8 @@ function Main(props) {
                     <span className="reduce">Available&nbsp;</span>Fish</Button>
                 <Button variant="contained" onClick={() => {setType(1); toggleLoading(true);}}>All<span className="reduce">&nbsp;Available</span>
                 </Button>
+                <Button variant="contained" onClick={() => {setType(4); toggleLoading(true);}}><span className="reduce">All&nbsp;</span> Month
+                </Button>
                 {
                     userData
                         ? <FormControlLabel control={<Checkbox type = "checkbox" id = "hide" checked = {
