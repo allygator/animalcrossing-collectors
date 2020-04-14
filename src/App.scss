@@ -479,6 +479,12 @@ a {
     }
 }
 @media (max-width: 705px) {
+    // .dark {
+    //     .little {
+    //         background-color: $dark-grey;
+    //     }
+    // }
+
     .main {
         &.centered {
             #header {
@@ -486,6 +492,23 @@ a {
                 position: fixed;
                 top: unset;
                 bottom: 2px;
+            }
+            .info {
+                width: 80%;
+            }
+        }
+        // .little {
+        //     position: fixed;
+        //     width: 100%;
+        //     transform: translateY(-90%);
+        // }
+        #specific {
+            #specific-options {
+                align-items: center;
+                #dropdowns {
+                    width: 100%;
+                    margin-bottom: 8px;
+                }
             }
         }
     }

@@ -143,10 +143,10 @@ function Main(props) {
                 }
                 <p className={type !== 0
                         ? 'hidden'
-                        : ''}>Use the globe at the top to switch hemispheres.</p>
-                <h2 className={type !== 0
+                        : ''}>Use the globe to switch hemispheres.</p>
+                    <p className={type !== 0
                         ? 'hidden'
-                        : ''}>Use the quick options for critter availability right now.</h2>
+                        : ''}>Use the quick options for critter availability right now.</p>
                 <h3 className={userData
                         ? "reduce hidden"
                         : "reduce"}>Login to save what you have caught and donated.</h3>
