@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 function Options(props) {
+    // console.log(props);
     const options = ['Bugs', 'Fish', 'All'];
 
     return (<ButtonGroup size="medium" color="primary" variant="contained" aria-label="outlined primary button group">
@@ -11,7 +12,7 @@ function Options(props) {
                 <Button onClick={() => {
                     props.setType(index + 1);
                     props.toggleLoading(true);
-                    props.date ? props.useDate(true) : props.useDate(false);
+                    props.date ? props.submit(true) : props.submit(false);
                 }} key={option}>
                 {
                     index === 2

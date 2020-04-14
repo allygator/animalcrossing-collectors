@@ -112,7 +112,7 @@ a {
         align-self: stretch;
         width: 90%;
         margin: 8px auto;
-        flex-direction: column;
+        // flex-direction: row;
         h1 {
             font-size: 1.2em;
             margin: 0.2em;
@@ -122,11 +122,29 @@ a {
             font-size: 1em;
             margin: 0.2em;
         }
+        #quick {
+            width: unset;
+            // flex-direction: column;
+            align-items: center;
+            .MuiFormControlLabel-root {
+                margin-left: 0;
+            }
+        }
 
         #specific {
-            width: 80%;
             h3 {
-                margin: 1em 0 0 0;
+                margin: 0.5em 0;
+            }
+            #specific-options {
+                // flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                #dropdowns {
+                    width: 100%;
+                    .MuiFormControl-root {
+                        margin: 4px;
+                    }
+                }
             }
         }
     }
@@ -136,6 +154,11 @@ a {
             display: flex;
             justify-content: space-evenly;
             align-items: flex-end;
+            #dropdowns {
+                width: 65%;
+                display: flex;
+                justify-content: space-around;
+            }
         }
 
         .specific-form {
@@ -288,7 +311,13 @@ a {
     flex-direction: column;
     align-items: center;
     padding-bottom: 40px;
-
+    #instructions {
+        width: 80%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid $light-grey;
+    }
     h3 {
         margin: 0.34em 0;
     }
@@ -318,7 +347,7 @@ a {
     svg {
         height: 400px;
         opacity: 1;
-        animation: out 2s ease-out 1;
+        // animation: out 2s ease-out 1;
 
         #planet {
             -webkit-animation: spin 3s linear infinite;
@@ -486,6 +515,10 @@ a {
     .info {
         width: 80%;
         margin: auto;
+        flex-direction: column;
+        #specific-options {
+            flex-direction: column;
+        }
     }
 
     .little {
@@ -510,6 +543,10 @@ a {
 
     .reduce {
         display: none;
+    }
+
+    #instructions {
+        flex-direction: column;
     }
 }
 

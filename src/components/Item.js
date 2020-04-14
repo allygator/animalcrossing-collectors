@@ -61,7 +61,6 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 });
 
 function Item(props) {
-    console.log(props);
     const firebase = useContext(FirebaseContext);
     const userData = useContext(UserContext);
     const [item,setItem] = useState([]);

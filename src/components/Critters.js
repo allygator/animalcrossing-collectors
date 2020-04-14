@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import {FirebaseContext} from './Firebase';
 import UserContext from './UserContext';
 import Item from './Item';
-import Loadingsvg from './svg/Loadingsvg';
+// import Loadingsvg from './svg/Loadingsvg';
 import cx from 'clsx';
 // import Header from './Header';
 //  import {Link} from 'react-router-dom';
@@ -14,10 +14,9 @@ import cx from 'clsx';
 // import {faLightbulb as lightOn} from '@fortawesome/free-solid-svg-icons';
 // import {faLightbulb as lightOff} from '@fortawesome/free-regular-svg-icons';
 
-var types = ['', 'all', 'bugs', 'fish'];
+var types = ['', 'bugs', 'fish', 'all'];
 
 function Critters(props) {
-    // console.log(props);
     const firebase = useContext(FirebaseContext);
     const userData = useContext(UserContext);
     const [critters, setCritters] = useState([])
@@ -106,7 +105,7 @@ function Critters(props) {
     }, [props, firebase.db]);
 
     return (<div className="content">
-
+    <div id="instructions">
         {
             props.hemisphere
                 ? <h3>Northern Hemisphere</h3>
@@ -114,14 +113,10 @@ function Critters(props) {
         }
         {
             userData
-                ? <h3 id="full">Marking donated will automatically mark collected as well</h3>
+                ? <p id="full">Marking donated will automatically mark collected as well</p>
                 : ''
         }
-        {
-            props.loading
-                ? <Loadingsvg/>
-                : ''
-        }
+        </div>
         <div className={cx("available", props.loading && 'hidden')}>
             {
                 critters
@@ -131,8 +126,8 @@ function Critters(props) {
                         let collected;
                         let donated;
                         if (userData) {
-                            collected = collection[name][0];
-                            donated = collection[name][1];
+                            collected = collection[name]?.[0];
+                            donated = collection[name]?.[1];
                             if (props.hidden) {
                                 if (!donated) {
                                     return <Item item={item} key={item.Name} currMonth={currentDate.getMonth()} type={types[props.type]} collected={collected} ignore={!props.specific}/>;
