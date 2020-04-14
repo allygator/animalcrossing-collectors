@@ -61,7 +61,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
 });
 
 function Item(props) {
-    // console.log(props);
+    console.log(props);
     const firebase = useContext(FirebaseContext);
     const userData = useContext(UserContext);
     const [item,setItem] = useState([]);
@@ -79,7 +79,7 @@ function Item(props) {
         if(props.item.Shadow) {
             setType("fish");
         } else {
-            setType("bug");
+            setType("bugs");
         }
         // setType(props.item);
     }, [props.item]);
@@ -160,7 +160,7 @@ function Item(props) {
     let avi = <Avatar className={styles.avatar}><FontAwesomeIcon icon={warning} alt="Switch light mode" size="xs" transform="up-2" title="Leaving end of month"/></Avatar>
   return (
       <Card className={cx(styles.card, type, 'critter')} elevation={0}>
-          <CardHeader title={item.Name} disableTypography className={cx(styles.heading, "cardHeader")} avatar={leave ? avi : ''}/>
+          <CardHeader title={item.Name} disableTypography className={cx(styles.heading, "cardHeader")} avatar={leave && props.ignore ? avi : ''}/>
       <CardContent className={cx(styles.subheader, "cardInfo")}>
       <p className={styles.subheader}>{item.Value} Bells • {item.TimeString ? item.TimeString : ""}</p>
       <Divider />

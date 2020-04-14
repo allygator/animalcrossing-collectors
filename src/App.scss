@@ -48,7 +48,7 @@ a {
         color: $dark-grey;
         background-color: $cream;
 
-        .bug {
+        .bugs {
             background-color: $light-green;
         }
 
@@ -64,6 +64,7 @@ a {
         .MuiAvatar-circle.on {
             background-color: $brown;
         }
+
         #loading-container {
             background-color: $cream;
         }
@@ -73,7 +74,7 @@ a {
         background-color: #292C3D;
         color: $cream;
 
-        .bug {
+        .bugs {
             background-color: $dark-green;
         }
 
@@ -82,7 +83,11 @@ a {
         }
 
         .MuiCardContent-root,
-        .MuiCardHeader-root {
+        .MuiCardHeader-root,
+        .MuiCheckbox-root,
+        .MuiFormLabel-root,
+        .MuiInputBase-root,
+        .MuiSelect-icon {
             color: $cream;
         }
 
@@ -90,9 +95,10 @@ a {
             background-color: $brown;
         }
 
-        .MuiCheckbox-root {
-            color: $cream;
+        .MuiInput-underline:before, .MuiInput-underline:hover:not(.Mui-disabled):before {
+            border-bottom-color: $cream;
         }
+
         #loading-container {
             background-color: $dark-grey;
         }
@@ -106,6 +112,7 @@ a {
         align-self: stretch;
         width: 90%;
         margin: 8px auto;
+        flex-direction: column;
         h1 {
             font-size: 1.2em;
             margin: 0.2em;
@@ -114,6 +121,25 @@ a {
         h2 {
             font-size: 1em;
             margin: 0.2em;
+        }
+
+        #specific {
+            width: 80%;
+            h3 {
+                margin: 1em 0 0 0;
+            }
+        }
+    }
+
+    #specific {
+        #specific-options {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: flex-end;
+        }
+
+        .specific-form {
+            min-width: 100px;
         }
     }
 
@@ -172,9 +198,11 @@ a {
     justify-content: space-between;
     align-items: center;
     margin: 0.5%;
+
     a {
         color: white;
     }
+
     h1 {
         margin: 0.2em 0;
         transition: display 1.5s;
@@ -216,6 +244,7 @@ a {
     width: 80%;
     margin: auto;
     justify-content: space-evenly;
+
     .inputs {
         display: flex;
         flex-wrap: wrap;
@@ -249,7 +278,7 @@ a {
 
 #quick {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     width: 80%;
 }
 
@@ -285,49 +314,95 @@ a {
     width: 100%;
     display: flex;
     justify-content: center;
+
     svg {
         height: 400px;
         opacity: 1;
         animation: out 2s ease-out 1;
+
         #planet {
-            -webkit-animation:spin 3s linear infinite;
-            -moz-animation:spin 3s linear infinite;
-            animation:spin 3s linear infinite;
+            -webkit-animation: spin 3s linear infinite;
+            -moz-animation: spin 3s linear infinite;
+            animation: spin 3s linear infinite;
             transform-origin: 108.5px 148.671px;
         }
+
         #critter {
-            animation:wiggle 3s linear infinite;
+            animation: wiggle 3s linear infinite;
             transform-origin: 108.5px 24.358px;
         }
     }
 
-    .blue, .cls-1 {
+    .blue,
+    .cls-1 {
         fill: $light-blue;
     }
 
-    .green, .cls-2 {
+    .cls-2,
+    .green {
         fill: $light-green;
     }
 
-    .brown, .cls-3 {
+    .brown,
+    .cls-3 {
         fill: $brown;
     }
 
-    .tan, .cls-4 {
+    .cls-4,
+    .tan {
         fill: $tan;
     }
 }
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+};
+@keyframes wiggle {
+    0% {
+        transform: rotate(0deg);
+    }
 
-@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-@keyframes spin { 100% { transform:rotate(360deg); }};
-@keyframes wiggle { 0% { transform:rotate(0deg) } 25% {transform:rotate(-2deg)} 50% { transform:rotate(0deg) } 75% { transform:rotate(2deg);} 100% {transform: rotate(0deg)}};
+    25% {
+        transform: rotate(-2deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(2deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+};
 @keyframes view {
-    0% { opacity: 0 }
-    };
+    0% {
+        opacity: 0;
+    }
+};
 @keyframes out {
-    0% { opacity: 1 }
-    100% {opacity: 0}};
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+};
 
 .available {
     display: flex;
@@ -336,16 +411,18 @@ a {
     align-items: center;
     opacity: 1;
     transition: opacity 0.5s;
+
     .critter {
         opacity: 1;
         transition: opacity 0.5s, background-color 600ms, color 600ms;
-        animation:view 600ms ease-in 1;
+        animation: view 600ms ease-in 1;
         max-width: 250px;
     }
 }
-
 @for $i from 1 to 80 {
-    .available .critter:nth-child(#{$i}) { animation-duration: $i * 15ms + 15ms; }
+    .available .critter:nth-child(#{$i}) {
+        animation-duration: $i * 15ms + 15ms;
+    }
 }
 
 .main .available .MuiCardHeader-root {
@@ -447,11 +524,13 @@ a {
     align-items: center;
     flex-direction: column;
     transition: background-color 750ms, color 750ms;
+
     #header {
         position: fixed;
         top: 0;
         left: 0;
     }
+
     &.light {
         color: $dark-grey;
         background-color: $cream;
@@ -461,6 +540,7 @@ a {
         background-color: #292C3D;
         color: $cream;
     }
+
     #loading {
         svg {
             animation: unset;

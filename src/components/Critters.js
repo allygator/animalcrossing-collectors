@@ -17,6 +17,7 @@ import cx from 'clsx';
 var types = ['', 'all', 'bugs', 'fish'];
 
 function Critters(props) {
+    // console.log(props);
     const firebase = useContext(FirebaseContext);
     const userData = useContext(UserContext);
     const [critters, setCritters] = useState([])
@@ -25,11 +26,15 @@ function Critters(props) {
 
     //Get what the user has already collected/donated
     useEffect(() => {
-        if(userData?.authUser) {
+        if (
+            userData
+            ?.authUser) {
             let unsubscribe = firebase.db.collection('users').doc(userData.authUser.uid).onSnapshot(doc => {
                 setCollection(doc.data());
-            }, err => { console.log(err) })
-            return () => unsubscribe();
+            }, err => {
+                console.log(err)
+            })
+            return() => unsubscribe();
         } else {
             return;
         }
@@ -38,17 +43,26 @@ function Critters(props) {
     //Get specific critter data based on what the user selected
     useEffect(() => {
         let date = new Date();
+        if (props.specific) {
+            date.setMonth(props.specific.month);
+            if (props.specific.meridiam) {
+                date.setHours(props.specific.hour + 12);
+            } else {
+                date.setHours(props.specific.hour);
+            }
+        }
         let loc = "Months.";
-        if(!props.hemisphere) {
+        if (!props.hemisphere) {
             loc = "Southern.";
         }
         let month = date.toLocaleString('default', {month: 'long'});
-        let monthQuery = loc+month;
+        let monthQuery = loc + month;
         let timeQuery = "Time.".concat(date.getHours());
+        props.toggleLoading(false);
         var itemHolder = [];
         switch (props.type) {
-            //User selected "all critters"
-            case 1:
+                //User selected "all critters"
+            case 3:
                 firebase.db.collection('bugs').where(monthQuery, "==", true).where(timeQuery, "==", true).get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
                         itemHolder.push(doc.data());
@@ -64,8 +78,8 @@ function Critters(props) {
                     });
                 });
                 break;
-            //User selected "bugs"
-            case 2:
+                //User selected "bugs"
+            case 1:
                 firebase.db.collection('bugs').where(monthQuery, "==", true).where(timeQuery, "==", true).get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
                         itemHolder.push(doc.data());
@@ -75,8 +89,8 @@ function Critters(props) {
                     props.toggleLoading(false);
                 });
                 break;
-            //User selected "fish"
-            case 3:
+                //User selected "fish"
+            case 2:
                 firebase.db.collection('fish').where(monthQuery, "==", true).where(timeQuery, "==", true).get().then(function(querySnapshot) {
                     querySnapshot.forEach(function(doc) {
                         itemHolder.push(doc.data());
@@ -91,13 +105,24 @@ function Critters(props) {
         }
     }, [props, firebase.db]);
 
-    return (
-        <div className="content">
+    return (<div className="content">
 
-            {props.hemisphere ? <h3>Northern Hemisphere</h3> : <h3>Southern Hemisphere</h3>}
-            {userData ? <h3 id="full">Marking donated will automatically mark collected as well</h3> : ''}
-            {props.loading ? <Loadingsvg /> : ''}
-            <div className={cx("available", props.loading && 'hidden')}>
+        {
+            props.hemisphere
+                ? <h3>Northern Hemisphere</h3>
+                : <h3>Southern Hemisphere</h3>
+        }
+        {
+            userData
+                ? <h3 id="full">Marking donated will automatically mark collected as well</h3>
+                : ''
+        }
+        {
+            props.loading
+                ? <Loadingsvg/>
+                : ''
+        }
+        <div className={cx("available", props.loading && 'hidden')}>
             {
                 critters
                     ? (critters.map(function(item) {
@@ -110,22 +135,21 @@ function Critters(props) {
                             donated = collection[name][1];
                             if (props.hidden) {
                                 if (!donated) {
-                                    return <Item item={item} key={item.Name} currMonth={currentDate.getMonth()}  type={types[props.type]} collected={collected}/>;
+                                    return <Item item={item} key={item.Name} currMonth={currentDate.getMonth()} type={types[props.type]} collected={collected} ignore={!props.specific}/>;
                                 } else {
                                     return '';
                                 }
                             } else {
-                                return <Item item={item} key={item.Name} currMonth={currentDate.getMonth()}  type={types[props.type]} collected={collected} donated={donated}/>;
+                                return <Item item={item} key={item.Name} currMonth={currentDate.getMonth()} type={types[props.type]} collected={collected} donated={donated} ignore={!props.specific}/>;
                             }
                         } else {
-                            return <Item item={item} key={item.Name} currMonth={currentDate.getMonth()}  type={types[props.type]}/>;
+                            return <Item item={item} key={item.Name} currMonth={currentDate.getMonth()} type={types[props.type]} ignore={!props.specific}/>;
                         }
                     }))
                     : ""
             }
-            </div>
         </div>
-    );
+    </div>);
 }
 
 export default Critters;
