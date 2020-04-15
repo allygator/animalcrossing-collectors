@@ -20,7 +20,7 @@ function Header(props) {
 
     return (
         <div id="header">
-            <Link to="/"><h1 className={props.size ? 'hidden' : ''}>AC:NH Critter Collector</h1></Link>
+            <Link to="/"><h1 className={props.size ? 'hidden' : ''} onClick={props.reset}>AC:NH Critter Collector</h1></Link>
             <div id="buttons">
             <IconButton onClick={props.toggle} className="button-icons">
                 <FontAwesomeIcon icon={props.lighting

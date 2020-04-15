@@ -137,10 +137,19 @@ function Main(props) {
         showMenu(!mobileMenu)
     }
 
+    function reset() {
+        setType(0);
+        setHidden(false);
+        setPicker({month: 0, hour: 1, meridiam: 0});
+        setSubmitted({month: 0, hour: 1, meridiam: 0});
+        setPickerUse(false);
+        showMenu(false);
+    }
+
     return (<ThemeProvider theme={theme}>
         <div className={cx('main', lighting && 'dark', !lighting && 'light', !type && 'centered')}>
 
-            <Header toggle={toggle} lighting={lighting} size={!type} sphereUp={hemisphere} sphere={sphere}/>
+            <Header toggle={toggle} lighting={lighting} size={!type} sphereUp={hemisphere} sphere={sphere} reset={reset}/>
             <div className={cx('info', !!type && "little", mobileMenu && "show")}>
                 {
                     type !== 0
