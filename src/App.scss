@@ -479,11 +479,16 @@ a {
     }
 }
 @media (max-width: 705px) {
-    // .dark {
-    //     .little {
-    //         background-color: $dark-grey;
-    //     }
-    // }
+    .dark {
+        .little {
+            background-color: $dark-grey;
+        }
+    }
+    .light {
+        .little {
+            background-color: $cream;
+        }
+    }
 
     .main {
         &.centered {
@@ -494,14 +499,41 @@ a {
                 bottom: 2px;
             }
             .info {
-                width: 80%;
+                width: 85%;
+                #menuButton {
+                    display: none;
+                }
+                #specific {
+                    padding-bottom: 12%;
+                }
             }
         }
-        // .little {
-        //     position: fixed;
-        //     width: 100%;
-        //     transform: translateY(-90%);
-        // }
+        .little {
+            position: fixed;
+            width: 100%;
+            transform: translateY(-89%);
+            z-index: 1;
+            padding-bottom: 10px;
+            transition: transform 0.6s;
+            margin: 2% 0 0 0;
+            &.show {
+                transform: translateY(0);
+            }
+            #specific {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+            }
+            svg {
+                &#menuButton {
+                    filter: drop-shadow( 0px 1px 2px $cream);
+                }
+
+            }
+        }
+        .little>*:nth-last-child(2) {
+            margin-bottom: 15px;
+        }
         #specific {
             #specific-options {
                 align-items: center;
@@ -510,6 +542,10 @@ a {
                     margin-bottom: 8px;
                 }
             }
+        }
+        .content {
+            margin-top: 10%;
+            position: relative;
         }
     }
 
@@ -558,10 +594,6 @@ a {
         width: 95%;
         align-items: center;
         flex-wrap: wrap;
-
-        button {
-            margin: 2px 0;
-        }
     }
 
     .reduce {

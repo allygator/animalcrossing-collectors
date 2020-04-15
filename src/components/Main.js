@@ -12,6 +12,9 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronUp as lightOn} from '@fortawesome/free-solid-svg-icons';
+import {faChevronDown as lightOff} from '@fortawesome/free-solid-svg-icons';
 
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
@@ -66,6 +69,7 @@ function Main(props) {
     const [picker, setPicker] = useState({month: 0, hour: 1, meridiam: 0});
     const [pickerSub, setSubmitted] = useState({month: 0, hour: 1, meridiam: 0});
     const [usePicker, setPickerUse] = useState(false);
+    const [mobileMenu, showMenu] = useState(false);
     const toggleLoading = (val) => {
         if (val) {
             setLoading(val);
@@ -128,14 +132,16 @@ function Main(props) {
     function handleChange(e) {
         setHidden(e.target.checked);
     }
-    // {type !== 0
-    //         ? "little info"
-    //         : 'info'}
+
+    function move() {
+        showMenu(!mobileMenu)
+    }
+
     return (<ThemeProvider theme={theme}>
         <div className={cx('main', lighting && 'dark', !lighting && 'light', !type && 'centered')}>
 
             <Header toggle={toggle} lighting={lighting} size={!type} sphereUp={hemisphere} sphere={sphere}/>
-            <div className={cx('info', !!type && "little")}>
+            <div className={cx('info', !!type && "little", mobileMenu && "show")}>
                 {
                     type !== 0
                         ? ''
@@ -201,7 +207,7 @@ function Main(props) {
                         <Options type="specific" toggleLoading={toggleLoading} setType={pickType} date={true} submit={submit}/>
                     </div>
                 </div>
-
+                <FontAwesomeIcon icon={mobileMenu ? lightOn : lightOff} title="test" transform="up-3" onClick={move} id="menuButton"/>
             </div>
             {
                 loading
