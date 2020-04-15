@@ -99,23 +99,40 @@ function Critters(props) {
                     props.toggleLoading(false);
                 });
                 break;
+                //All Month
+            case 4:
+                firebase.db.collection('bugs').where(monthQuery, "==", true).get().then(function(querySnapshot) {
+                    querySnapshot.forEach(function(doc) {
+                        itemHolder.push(doc.data());
+                    });
+                }).then(function() {
+                    firebase.db.collection('fish').where(monthQuery, "==", true).get().then(function(querySnapshot) {
+                        querySnapshot.forEach(function(doc) {
+                            itemHolder.push(doc.data());
+                        })
+                    }).then(function() {
+                        setCritters(itemHolder);
+                        props.toggleLoading(false);
+                    });
+                });
+                break;
             default:
                 break;
         }
     }, [props, firebase.db]);
 
     return (<div className="content">
-    <div id="instructions">
-        {
-            props.hemisphere
-                ? <h3>Northern Hemisphere</h3>
-                : <h3>Southern Hemisphere</h3>
-        }
-        {
-            userData
-                ? <p id="full">Marking donated will automatically mark collected as well</p>
-                : ''
-        }
+        <div id="instructions">
+            {
+                props.hemisphere
+                    ? <h3>Northern Hemisphere</h3>
+                    : <h3>Southern Hemisphere</h3>
+            }
+            {
+                userData
+                    ? <p id="full">Marking donated will automatically mark collected as well</p>
+                    : ''
+            }
         </div>
         <div className={cx("available", props.loading && 'hidden')}>
             {
@@ -126,8 +143,10 @@ function Critters(props) {
                         let collected;
                         let donated;
                         if (userData) {
-                            collected = collection[name]?.[0];
-                            donated = collection[name]?.[1];
+                            collected = collection[name]
+                                ?.[0];
+                            donated = collection[name]
+                                ?.[1];
                             if (props.hidden) {
                                 if (!donated) {
                                     return <Item item={item} key={item.Name} currMonth={currentDate.getMonth()} type={types[props.type]} collected={collected} ignore={!props.specific}/>;
