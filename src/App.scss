@@ -37,6 +37,9 @@ a {
 
         .info {
             width: 60%;
+            #menuButton {
+                display: none;
+            }
         }
 
         #quick {
@@ -500,9 +503,6 @@ a {
             }
             .info {
                 width: 85%;
-                #menuButton {
-                    display: none;
-                }
                 #specific {
                     padding-bottom: 12%;
                 }
