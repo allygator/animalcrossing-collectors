@@ -126,7 +126,7 @@ function Main(props) {
                         : ''}>Use the globe to switch hemispheres.</p>
                     <p className={type !== 0
                         ? 'hidden'
-                        : ''}>Use the quick options for critter availability right now.</p>
+                        : ''}>By default the buttons will display the currently available critters in your timezone. If your game is not in your timezone, check the box and use the specific month/time selectors </p>
                 <h3 className={userData
                         ? "reduce hidden"
                         : "reduce"}>Login to save what you have caught and donated.</h3>
