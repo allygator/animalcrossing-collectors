@@ -68,9 +68,6 @@ function Item(props) {
     const [donated,setDonated] = useState(false);
     const [type, setType] = useState('');
     let leave = false;
-    // useEffect(() => {
-    //     console.log(props);
-    // }, [props]);
     useEffect(() => {
         setItem(props.item);
     }, [props.item]);
@@ -80,15 +77,10 @@ function Item(props) {
         } else {
             setType("bugs");
         }
-        // setType(props.item);
     }, [props.item]);
     useEffect(() => {
-        // console.log("collected")
         setCollected(props.collected);
     }, [props.collected]);
-    // useEffect(() => {
-    //     console.log(collected)
-    // }, [collected]);
     useEffect(() => {
         setDonated(props.donated);
     }, [props.donated]);

@@ -4,13 +4,10 @@ import UserContext from './UserContext';
 import Header from './Header';
 import Critters from './Critters';
 import Options from './Options';
+import Date from './Date';
 import Loadingsvg from './svg/Loadingsvg';
 import cx from 'clsx';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronUp as lightOn} from '@fortawesome/free-solid-svg-icons';
@@ -27,47 +24,16 @@ const theme = createMuiTheme({
     }
 });
 
-var months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-];
-var hours = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12
-];
-
-var meridiamOptions = ["AM", "PM"];
-
 function Main(props) {
     const firebase = useContext(FirebaseContext);
     const userData = useContext(UserContext);
     const [type, setType] = useState(0);
     const [lighting, setLight] = useState(true);
-    const [hidden, setHidden] = useState(false);
+    const [hideDonated, setDonated] = useState(false);
     const [sphere, setSphere] = useState(true);
     const [loading, setLoading] = useState();
     const [picker, setPicker] = useState({month: 0, hour: 1, meridiam: 0});
-    const [pickerSub, setSubmitted] = useState({month: 0, hour: 1, meridiam: 0});
+    const [pickerSub, setSubmitted] = useState();
     const [usePicker, setPickerUse] = useState(false);
     const [mobileMenu, showMenu] = useState(false);
     const toggleLoading = (val) => {
@@ -83,13 +49,15 @@ function Main(props) {
         setType(val);
     };
     const submit = (val) => {
-        if (usePicker !== val) {
-            setPickerUse(val);
+        if (val) {
+            setSubmitted({
+                ...pickerSub,
+                month: picker.month, hour: picker.hour, meridiam: picker.meridiam
+            });
+        } else {
+            setSubmitted();
         }
-        setSubmitted({
-            ...pickerSub,
-            picker
-        });
+
     };
     const toggle = () => setLight(!lighting);
     const hemisphere = () => {
@@ -103,13 +71,6 @@ function Main(props) {
         setSphere(!sphere)
     };
 
-    const handleTimeChange = (event) => {
-        const name = event.target.name;
-        setPicker({
-            ...picker,
-            [name]: event.target.value
-        });
-    };
     useEffect(() => {
         if (
             userData
@@ -130,7 +91,11 @@ function Main(props) {
     }, [firebase, userData, sphere]);
 
     function handleChange(e) {
-        setHidden(e.target.checked);
+        setDonated(e.target.checked);
+    }
+
+    function showDate(e) {
+        setPickerUse(e.target.checked);
     }
 
     function move() {
@@ -139,9 +104,9 @@ function Main(props) {
 
     function reset() {
         setType(0);
-        setHidden(false);
+        setDonated(false);
         setPicker({month: 0, hour: 1, meridiam: 0});
-        setSubmitted({month: 0, hour: 1, meridiam: 0});
+        setSubmitted();
         setPickerUse(false);
         showMenu(false);
     }
@@ -167,10 +132,10 @@ function Main(props) {
                         : "reduce"}>Login to save what you have caught and donated.</h3>
 
                 <div id="quick">
-                    <Options setType={pickType} toggleLoading={toggleLoading} date={false} submit={submit}/> {
+                    <Options setType={pickType} toggleLoading={toggleLoading} date={usePicker} submit={submit}/> {
                         userData
                             ? <FormControlLabel control={<Checkbox type = "checkbox" id = "hide" checked = {
-                                        hidden
+                                        hideDonated
                                     }
                                     onChange = {
                                         handleChange
@@ -178,44 +143,14 @@ function Main(props) {
                             : ''
                     }
                 </div>
-                <div id="specific">
-                    <h3>Search specific month/hour:</h3>
-                    <div id="specific-options">
-                        <div id="dropdowns">
-                        <FormControl className="specific-form">
-                            <InputLabel id="month">Month</InputLabel>
-                            <Select labelId="month" id="demo-simple-select" value={picker.month} name="month" onChange={handleTimeChange}>
-                                {
-                                    months.map((month, index) => {
-                                        return <MenuItem value={index} key={month}>{month}</MenuItem>
-                                    })
-                                }
-                            </Select>
-                        </FormControl>
-                        <FormControl className="specific-form">
-                            <InputLabel id="hour">Hour</InputLabel>
-                            <Select labelId="hour" id="demo-simple-select" value={picker.hour} onChange={handleTimeChange} name="hour">
-                                {
-                                    hours.map((hour) => {
-                                        return <MenuItem value={hour} key={hour}>{hour}</MenuItem>
-                                    })
-                                }
-                            </Select>
-                        </FormControl>
-                        <FormControl className="specific-form">
-                            <InputLabel id="meridiam">Meridiam</InputLabel>
-                            <Select labelId="meridiam" id="demo-simple-select" value={picker.meridiam} onChange={handleTimeChange} name="meridiam">
-                                {
-                                    meridiamOptions.map((thing, index) => {
-                                        return <MenuItem value={index} key={thing}>{thing}</MenuItem>
-                                    })
-                                }
-                            </Select>
-                        </FormControl>
-                        </div>
-                        <Options type="specific" toggleLoading={toggleLoading} setType={pickType} date={true} submit={submit}/>
-                    </div>
-                </div>
+                <FormControlLabel control={<Checkbox type = "checkbox" id = "specific-checkbox" checked = {
+                            usePicker
+                        }
+                        onChange = {
+                            showDate
+                        } />} label="Use specific month/time"/>
+                    {usePicker ?
+                    <Date picker={picker} setPicker={setPicker} toggleLoading={toggleLoading} loading={loading} pickType={pickType} submit={submit}/> : '' }
                 <FontAwesomeIcon icon={mobileMenu ? lightOn : lightOff} title="test" transform="up-3" onClick={move} id="menuButton"/>
             </div>
             {
@@ -224,10 +159,8 @@ function Main(props) {
                     : ''
             }
             {
-                type !== 0
-                    ? usePicker
-                        ? <Critters type={type} hidden={hidden} hemisphere={sphere} toggleLoading={toggleLoading} loading={loading} specific={picker}/>
-                        : <Critters type={type} hidden={hidden} hemisphere={sphere} toggleLoading={toggleLoading} loading={loading}/>
+                type !== 0 ?
+                        <Critters type={type} hidden={hideDonated} hemisphere={sphere} toggleLoading={toggleLoading} loading={loading} specific={pickerSub}/>
                     : ''
             }
         </div>
