@@ -258,7 +258,7 @@ a {
   align-items: center;
   min-height: 100vh;
   background-color: $cream;
-
+  padding-bottom: 40px;
   .MuiFormLabel-root.Mui-error,
   .MuiInput-underline.Mui-error:after {
     color: $warning;

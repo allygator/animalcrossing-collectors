@@ -164,7 +164,6 @@ function Critters(props) {
 
   function sortFunc(type) {
     let tempCritters = critters;
-    console.log(type);
     //value=0, location=1, size=2, alpha=3
     switch (type) {
       case 0:
@@ -187,7 +186,6 @@ function Critters(props) {
         break;
       case 2:
         tempCritters.sort((a, b) => {
-          console.log(a?.Shadow);
           if (a?.Shadow > b?.Shadow) {
             return 1;
           } else {
@@ -205,8 +203,6 @@ function Critters(props) {
         });
         break;
     }
-
-    console.log(tempCritters);
     setCritters([...tempCritters]);
   }
 
