@@ -190,6 +190,14 @@ a {
 
 .info {
   transition: display 1.5s;
+  &.little {
+    .reduce {
+      display: none;
+    }
+  }
+  #monthButton {
+    margin-left: 10px;
+  }
 }
 
 #collections {
@@ -258,7 +266,7 @@ a {
   align-items: center;
   min-height: 100vh;
   background-color: $cream;
-  padding-bottom: 40px;
+
   .MuiFormLabel-root.Mui-error,
   .MuiInput-underline.Mui-error:after {
     color: $warning;
@@ -493,6 +501,12 @@ a {
       flex-direction: column;
     }
   }
+  #login-container {
+    .user-fields {
+      width: 36%;
+      padding: 1.5%;
+    }
+  }
 }
 @media (max-width: 705px) {
   .dark {
@@ -504,6 +518,10 @@ a {
     .little {
       background-color: $cream;
     }
+  }
+
+  .login {
+    padding-bottom: 40px;
   }
 
   .main {

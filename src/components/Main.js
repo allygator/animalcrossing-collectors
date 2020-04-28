@@ -9,6 +9,7 @@ import Loadingsvg from "./svg/Loadingsvg";
 import cx from "clsx";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import Button from "@material-ui/core/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp as lightOn } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown as lightOff } from "@fortawesome/free-solid-svg-icons";
@@ -19,9 +20,9 @@ import grey from "@material-ui/core/colors/grey";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: grey[300]
-    }
-  }
+      main: grey[300],
+    },
+  },
 });
 
 function Main(props) {
@@ -36,7 +37,7 @@ function Main(props) {
   const [pickerSub, setSubmitted] = useState();
   const [usePicker, setPickerUse] = useState(false);
   const [mobileMenu, showMenu] = useState(false);
-  const toggleLoading = val => {
+  const toggleLoading = (val) => {
     if (val) {
       setLoading(val);
     } else {
@@ -45,16 +46,16 @@ function Main(props) {
       }, 1000);
     }
   };
-  const pickType = val => {
+  const pickType = (val) => {
     setType(val);
   };
-  const submit = val => {
+  const submit = (val) => {
     if (val) {
       setSubmitted({
         ...pickerSub,
         month: picker.month,
         hour: picker.hour,
-        meridiem: picker.meridiem
+        meridiem: picker.meridiem,
       });
     } else {
       setSubmitted();
@@ -63,12 +64,9 @@ function Main(props) {
   const toggle = () => setLight(!lighting);
   const hemisphere = () => {
     if (userData?.authUser) {
-      firebase.db
-        .collection("users")
-        .doc(userData.authUser.uid)
-        .update({
-          sphere: !sphere
-        });
+      firebase.db.collection("users").doc(userData.authUser.uid).update({
+        sphere: !sphere,
+      });
     }
     setSphere(!sphere);
   };
@@ -79,7 +77,7 @@ function Main(props) {
         .collection("users")
         .doc(userData.authUser.uid)
         .onSnapshot(
-          snapshot => {
+          (snapshot) => {
             if (!snapshot.data().sphere) {
             } else {
               if (sphere !== snapshot.data().sphere) {
@@ -87,7 +85,7 @@ function Main(props) {
               }
             }
           },
-          err => {
+          (err) => {
             console.log(err);
           }
         );
@@ -156,7 +154,17 @@ function Main(props) {
               toggleLoading={toggleLoading}
               date={usePicker}
               submit={submit}
-            />{" "}
+            />
+            <Button
+              variant="contained"
+              onClick={() => {
+                setType(4);
+                toggleLoading(true);
+              }}
+              id="monthButton"
+            >
+              <span className="reduce">All&nbsp;</span> Month
+            </Button>
             {userData ? (
               <FormControlLabel
                 control={
