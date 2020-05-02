@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { FirebaseContext } from "./Firebase";
+import allCritters from "../allCritters";
 import UserContext from "./UserContext";
 import Item from "./Item";
 import FormControl from "@material-ui/core/FormControl";
@@ -17,143 +18,220 @@ function Critters(props) {
   const [critters, setCritters] = useState([]);
   const [sort, setSort] = useState(3);
   const [collection, setCollection] = useState({});
+  const [useLocal, setLocal] = useState(true);
+  let type = props.type;
+  let specific = props.specific;
+  let hemisphere = props.hemisphere;
+  const toggleLoading = props.toggleLoading;
   let currentDate = new Date();
 
   //Get what the user has already collected/donated
   useEffect(() => {
     if (userData?.authUser) {
+      setLocal(false);
       let unsubscribe = firebase.db
         .collection("users")
         .doc(userData.authUser.uid)
         .onSnapshot(
-          doc => {
+          (doc) => {
             setCollection(doc.data());
           },
-          err => {
+          (err) => {
             console.log(err);
           }
         );
       return () => unsubscribe();
     } else {
-      return;
+      setLocal(true);
     }
   }, [firebase, userData]);
 
   //Get specific critter data based on what the user selected
   useEffect(() => {
     let date = new Date();
-    if (props.specific) {
-      date.setMonth(props.specific.month);
-      if (props.specific.meridiem) {
-        date.setHours(props.specific.hour + 12);
+    if (specific) {
+      date.setMonth(specific.month);
+      if (specific.meridiem) {
+        date.setHours(specific.hour + 12);
       } else {
-        date.setHours(props.specific.hour);
+        date.setHours(specific.hour);
       }
     }
     let loc = "Months.";
-    if (!props.hemisphere) {
+    if (!hemisphere) {
       loc = "Southern.";
     }
     let month = date.toLocaleString("default", { month: "long" });
     let monthQuery = loc + month;
     let timeQuery = "Time.".concat(date.getHours());
-    props.toggleLoading(false);
     var itemHolder = [];
-    switch (props.type) {
-      //User selected "all critters"
-      case 3:
-        firebase.db
-          .collection("bugs")
-          .where(monthQuery, "==", true)
-          .where(timeQuery, "==", true)
-          .get()
-          .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-              itemHolder.push(doc.data());
-            });
-          })
-          .then(function() {
-            firebase.db
-              .collection("fish")
-              .where(monthQuery, "==", true)
-              .where(timeQuery, "==", true)
-              .get()
-              .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                  itemHolder.push(doc.data());
-                });
-              })
-              .then(function() {
-                setCritters(itemHolder);
-                props.toggleLoading(false);
+    if (!useLocal) {
+      switch (type) {
+        //User selected "all critters"
+        case 3:
+          firebase.db
+            .collection("bugs")
+            .where(monthQuery, "==", true)
+            .where(timeQuery, "==", true)
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                itemHolder.push(doc.data());
               });
-          });
-        break;
-      //User selected "bugs"
-      case 1:
-        firebase.db
-          .collection("bugs")
-          .where(monthQuery, "==", true)
-          .where(timeQuery, "==", true)
-          .get()
-          .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-              itemHolder.push(doc.data());
-            });
-          })
-          .then(function() {
-            setCritters(itemHolder);
-            props.toggleLoading(false);
-          });
-        break;
-      //User selected "fish"
-      case 2:
-        firebase.db
-          .collection("fish")
-          .where(monthQuery, "==", true)
-          .where(timeQuery, "==", true)
-          .get()
-          .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-              itemHolder.push(doc.data());
-            });
-          })
-          .then(function() {
-            setCritters(itemHolder);
-            props.toggleLoading(false);
-          });
-        break;
-      //All Month
-      case 4:
-        firebase.db
-          .collection("bugs")
-          .where(monthQuery, "==", true)
-          .get()
-          .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-              itemHolder.push(doc.data());
-            });
-          })
-          .then(function() {
-            firebase.db
-              .collection("fish")
-              .where(monthQuery, "==", true)
-              .get()
-              .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                  itemHolder.push(doc.data());
+            })
+            .then(function () {
+              firebase.db
+                .collection("fish")
+                .where(monthQuery, "==", true)
+                .where(timeQuery, "==", true)
+                .get()
+                .then(function (querySnapshot) {
+                  querySnapshot.forEach(function (doc) {
+                    itemHolder.push(doc.data());
+                  });
+                })
+                .then(function () {
+                  setCritters(itemHolder);
+                  toggleLoading(false);
                 });
-              })
-              .then(function() {
-                setCritters(itemHolder);
-                props.toggleLoading(false);
+            });
+          break;
+        //User selected "bugs"
+        case 1:
+          firebase.db
+            .collection("bugs")
+            .where(monthQuery, "==", true)
+            .where(timeQuery, "==", true)
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                itemHolder.push(doc.data());
               });
+            })
+            .then(function () {
+              setCritters(itemHolder);
+              toggleLoading(false);
+            });
+          break;
+        //User selected "fish"
+        case 2:
+          firebase.db
+            .collection("fish")
+            .where(monthQuery, "==", true)
+            .where(timeQuery, "==", true)
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                itemHolder.push(doc.data());
+              });
+            })
+            .then(function () {
+              setCritters(itemHolder);
+              toggleLoading(false);
+            });
+          break;
+        //All Month
+        case 4:
+          firebase.db
+            .collection("bugs")
+            .where(monthQuery, "==", true)
+            .get()
+            .then(function (querySnapshot) {
+              querySnapshot.forEach(function (doc) {
+                itemHolder.push(doc.data());
+              });
+            })
+            .then(function () {
+              firebase.db
+                .collection("fish")
+                .where(monthQuery, "==", true)
+                .get()
+                .then(function (querySnapshot) {
+                  querySnapshot.forEach(function (doc) {
+                    itemHolder.push(doc.data());
+                  });
+                })
+                .then(function () {
+                  setCritters(itemHolder);
+                  toggleLoading(false);
+                });
+            });
+          break;
+        default:
+          break;
+      }
+    } else {
+      itemHolder = allCritters;
+      switch (type) {
+        //User selected "all critters"
+        case 3:
+          itemHolder = itemHolder.filter((a) => {
+            let month;
+            let hour = date.getHours();
+            if (loc.includes("Months")) {
+              month =
+                a.Months[date.toLocaleString("default", { month: "long" })];
+            } else {
+              month =
+                a.Southern[date.toLocaleString("default", { month: "long" })];
+            }
+            return month && a.Time[hour];
           });
-        break;
-      default:
-        break;
+          setCritters(itemHolder);
+          break;
+        //User selected "bugs"
+        case 1:
+          itemHolder = itemHolder.filter((a) => {
+            let month;
+            let hour = date.getHours();
+            if (loc.includes("Months")) {
+              month =
+                a.Months[date.toLocaleString("default", { month: "long" })];
+            } else {
+              month =
+                a.Southern[date.toLocaleString("default", { month: "long" })];
+            }
+            return !Object.keys(a).includes("Shadow") && month && a.Time[hour];
+          });
+          setCritters(itemHolder);
+          break;
+        //User selected "fish"
+        case 2:
+          itemHolder = itemHolder.filter((a) => {
+            let month;
+            let hour = date.getHours();
+            if (loc.includes("Months")) {
+              month =
+                a.Months[date.toLocaleString("default", { month: "long" })];
+            } else {
+              month =
+                a.Southern[date.toLocaleString("default", { month: "long" })];
+            }
+            return Object.keys(a).includes("Shadow") && month && a.Time[hour];
+          });
+          setCritters(itemHolder);
+          break;
+        //All Month
+        case 4:
+          itemHolder = itemHolder.filter((a) => {
+            let month;
+            if (loc.includes("Months")) {
+              month =
+                a.Months[date.toLocaleString("default", { month: "long" })];
+            } else {
+              month =
+                a.Southern[date.toLocaleString("default", { month: "long" })];
+            }
+            return month;
+          });
+          setCritters(itemHolder);
+          break;
+        default:
+          break;
+      }
     }
-  }, [props, firebase.db]);
+    // eslint-disable-next-line
+  }, [type, firebase.db, useLocal, hemisphere, specific]);
 
   function updateSortVal(e) {
     setSort(e.target.value);
@@ -232,9 +310,9 @@ function Critters(props) {
               onChange={updateSortVal}
             >
               {filterOptions.map((option, index) => {
-                let fish = option === "size (fish only)" && disableFish;
+                let showfish = option === "size (fish only)" && disableFish;
                 return (
-                  <MenuItem value={index} key={option} disabled={fish}>
+                  <MenuItem value={index} key={option} disabled={showfish}>
                     {option}
                   </MenuItem>
                 );
@@ -246,7 +324,7 @@ function Critters(props) {
 
       <div className={cx("available", props.loading && "hidden")}>
         {critters
-          ? critters.map(function(item) {
+          ? critters.map(function (item) {
               let name = item.Name.toLowerCase();
               name = name.replace("'", "");
               let collected;
@@ -299,5 +377,37 @@ function Critters(props) {
     </div>
   );
 }
+
+// const usePrevious = (value, initialValue) => {
+//   const ref = useRef(initialValue);
+//   useEffect(() => {
+//     ref.current = value;
+//   });
+//   return ref.current;
+// };
+// const useEffectDebugger = (effectHook, dependencies, dependencyNames = []) => {
+//   const previousDeps = usePrevious(dependencies, []);
+//
+//   const changedDeps = dependencies.reduce((accum, dependency, index) => {
+//     if (dependency !== previousDeps[index]) {
+//       const keyName = dependencyNames[index] || index;
+//       return {
+//         ...accum,
+//         [keyName]: {
+//           before: previousDeps[index],
+//           after: dependency,
+//         },
+//       };
+//     }
+//
+//     return accum;
+//   }, {});
+//
+//   if (Object.keys(changedDeps).length) {
+//     console.log("[use-effect-debugger] ", changedDeps);
+//   }
+//
+//   useEffect(effectHook, dependencies);
+// };
 
 export default Critters;

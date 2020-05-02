@@ -13,7 +13,7 @@ import Button from "@material-ui/core/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp as lightOn } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown as lightOff } from "@fortawesome/free-solid-svg-icons";
-import { useSwipeable, Swipeable } from "react-swipeable";
+import { useSwipeable } from "react-swipeable";
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import grey from "@material-ui/core/colors/grey";
