@@ -111,7 +111,6 @@ function Main(props) {
     onSwipedUp: () => move(false),
     onSwipedDown: () => move(true),
     preventDefaultTouchmoveEvent: true,
-    trackMouse: true,
   });
 
   function reset() {
