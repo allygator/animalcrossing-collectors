@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp as lightOn } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown as lightOff } from "@fortawesome/free-solid-svg-icons";
+import { useSwipeable, Swipeable } from "react-swipeable";
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import grey from "@material-ui/core/colors/grey";
@@ -103,9 +104,15 @@ function Main(props) {
     setPickerUse(e.target.checked);
   }
 
-  function move() {
-    showMenu(!mobileMenu);
+  function move(val) {
+    showMenu(val);
   }
+  const handlers = useSwipeable({
+    onSwipedUp: () => move(false),
+    onSwipedDown: () => move(true),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
 
   function reset() {
     setType(0);
@@ -134,7 +141,10 @@ function Main(props) {
           sphere={sphere}
           reset={reset}
         />
-        <div className={cx("info", !!type && "little", mobileMenu && "show")}>
+        <div
+          className={cx("info", !!type && "little", mobileMenu && "show")}
+          {...handlers}
+        >
           {type !== 0 ? "" : <h1>Welcome to AC:NH Critter Collector.</h1>}
           <p className={type !== 0 ? "hidden" : ""}>
             Use the globe to switch hemispheres.
