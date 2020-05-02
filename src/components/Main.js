@@ -105,7 +105,11 @@ function Main(props) {
   }
 
   function move(val) {
-    showMenu(val);
+    if (val) {
+      showMenu(val);
+    } else {
+      showMenu(!mobileMenu);
+    }
   }
   const handlers = useSwipeable({
     onSwipedUp: () => move(false),
@@ -217,7 +221,7 @@ function Main(props) {
             icon={mobileMenu ? lightOn : lightOff}
             title="test"
             transform="up-3"
-            onClick={move}
+            onClick={() => move()}
             id="menuButton"
           />
         </div>
