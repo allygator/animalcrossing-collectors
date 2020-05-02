@@ -13,6 +13,7 @@ var types = ["", "bugs", "fish", "all"];
 var filterOptions = ["value", "location", "size (fish only)", "alpha"];
 
 function Critters(props) {
+  console.log(window.navigator.onLine);
   const firebase = useContext(FirebaseContext);
   const userData = useContext(UserContext);
   const [critters, setCritters] = useState([]);
@@ -178,6 +179,7 @@ function Critters(props) {
             return month && a.Time[hour];
           });
           setCritters(itemHolder);
+          toggleLoading(false);
           break;
         //User selected "bugs"
         case 1:
@@ -194,6 +196,7 @@ function Critters(props) {
             return !Object.keys(a).includes("Shadow") && month && a.Time[hour];
           });
           setCritters(itemHolder);
+          toggleLoading(false);
           break;
         //User selected "fish"
         case 2:
@@ -210,6 +213,7 @@ function Critters(props) {
             return Object.keys(a).includes("Shadow") && month && a.Time[hour];
           });
           setCritters(itemHolder);
+          toggleLoading(false);
           break;
         //All Month
         case 4:
@@ -225,6 +229,7 @@ function Critters(props) {
             return month;
           });
           setCritters(itemHolder);
+          toggleLoading(false);
           break;
         default:
           break;
