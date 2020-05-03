@@ -180,7 +180,7 @@ let allCritters = [
     "Value": 3000
   },
   {
-    "Location": "In trees",
+    "Location": "Shake trees",
     "Months": {
       "April": true,
       "August": true,
@@ -600,7 +600,7 @@ let allCritters = [
     "Value": 100
   },
   {
-    "Location": "Tree stumps",
+    "Location": "Tree Stumps",
     "Months": {
       "April": true,
       "August": true,
@@ -3809,7 +3809,7 @@ let allCritters = [
       "23": true
     },
     "TimeString": "All day",
-    "Value": false
+    "Value": 3000
   },
   {
     "Location": "On Trees",
@@ -4352,7 +4352,7 @@ let allCritters = [
     "Value": 240
   },
   {
-    "Location": "Tree stumps",
+    "Location": "Tree Stumps",
     "Months": {
       "April": false,
       "August": false,

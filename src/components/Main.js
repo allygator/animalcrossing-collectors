@@ -10,6 +10,10 @@ import cx from "clsx";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp as lightOn } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown as lightOff } from "@fortawesome/free-solid-svg-icons";
@@ -26,6 +30,8 @@ const theme = createMuiTheme({
   },
 });
 
+var filterOptions = ["value", "location", "size (fish only)", "alpha"];
+
 function Main(props) {
   const firebase = useContext(FirebaseContext);
   const userData = useContext(UserContext);
@@ -38,6 +44,7 @@ function Main(props) {
   const [pickerSub, setSubmitted] = useState();
   const [usePicker, setPickerUse] = useState(false);
   const [mobileMenu, showMenu] = useState(false);
+  const [sort, setSort] = useState(3);
   const toggleLoading = (val) => {
     if (val) {
       setLoading(val);
@@ -126,6 +133,11 @@ function Main(props) {
     showMenu(false);
   }
 
+  function updateSortVal(e) {
+    setSort(e.target.value);
+    // sortFunc(e.target.value);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -194,6 +206,33 @@ function Main(props) {
               ""
             )}
           </div>
+          {type !== 0 ? (
+            <div id="sort">
+              <FormControl>
+                <InputLabel id="sortLabel">Sort Order</InputLabel>
+                <Select
+                  labelId="sortLabel"
+                  value={sort}
+                  name="filter"
+                  onChange={updateSortVal}
+                >
+                  {filterOptions.map((option, index) => {
+                    return (
+                      <MenuItem
+                        value={index}
+                        key={option}
+                        disabled={type === 1 && index === 2}
+                      >
+                        {option}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </div>
+          ) : (
+            ""
+          )}
           <FormControlLabel
             control={
               <Checkbox
@@ -217,6 +256,7 @@ function Main(props) {
           ) : (
             ""
           )}
+
           <FontAwesomeIcon
             icon={mobileMenu ? lightOn : lightOff}
             title="test"
@@ -234,6 +274,7 @@ function Main(props) {
             toggleLoading={toggleLoading}
             loading={loading}
             specific={pickerSub}
+            sort={sort}
           />
         ) : (
           ""

@@ -3,26 +3,20 @@ import { FirebaseContext } from "./Firebase";
 import allCritters from "../allCritters";
 import UserContext from "./UserContext";
 import Item from "./Item";
-import FormControl from "@material-ui/core/FormControl";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
 import cx from "clsx";
 
 var types = ["", "bugs", "fish", "all"];
-var filterOptions = ["value", "location", "size (fish only)", "alpha"];
 
 function Critters(props) {
-  console.log(window.navigator.onLine);
   const firebase = useContext(FirebaseContext);
   const userData = useContext(UserContext);
   const [critters, setCritters] = useState([]);
-  const [sort, setSort] = useState(3);
   const [collection, setCollection] = useState({});
   const [useLocal, setLocal] = useState(true);
   let type = props.type;
   let specific = props.specific;
   let hemisphere = props.hemisphere;
+  let sort = props.sort;
   const toggleLoading = props.toggleLoading;
   let currentDate = new Date();
 
@@ -238,57 +232,54 @@ function Critters(props) {
     // eslint-disable-next-line
   }, [type, firebase.db, useLocal, hemisphere, specific]);
 
-  function updateSortVal(e) {
-    setSort(e.target.value);
-    sortFunc(e.target.value);
-  }
-
-  let disableFish = props.type === 1 ? true : false;
-
-  function sortFunc(type) {
+  useEffect(() => {
     let tempCritters = critters;
-    //value=0, location=1, size=2, alpha=3
-    switch (type) {
-      case 0:
-        tempCritters.sort((a, b) => {
-          if (a.Value > b.Value) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-        break;
-      case 1:
-        tempCritters.sort((a, b) => {
-          if (a.Location > b.Location) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-        break;
-      case 2:
-        tempCritters.sort((a, b) => {
-          if (a?.Shadow > b?.Shadow) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-        break;
-      default:
-        tempCritters.sort((a, b) => {
-          if (a.Value > b.Value) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
-        break;
+    if (tempCritters.length > 0) {
+      //value=0, location=1, size=2, alpha=3
+      switch (sort) {
+        case 0:
+          tempCritters.sort((a, b) => {
+            if (a.Value > b.Value) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
+          break;
+        case 1:
+          tempCritters.sort((a, b) => {
+            if (a.Location > b.Location) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
+          break;
+        case 2:
+          tempCritters.sort((a, b) => {
+            if (a?.Shadow > b?.Shadow) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
+          break;
+        case 3:
+          tempCritters.sort((a, b) => {
+            if (a.Name > b.Name) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
+          break;
+        default:
+          break;
+      }
+      setCritters([...tempCritters]);
     }
-    setCritters([...tempCritters]);
-  }
-
+    // eslint-disable-next-line
+  }, [sort, type]);
   return (
     <div className="content">
       <div id="instructions">
@@ -305,26 +296,6 @@ function Critters(props) {
         ) : (
           ""
         )}
-        <div id="sort">
-          <FormControl>
-            <InputLabel id="sortLabel">Sort Order</InputLabel>
-            <Select
-              labelId="sortLabel"
-              value={sort}
-              name="filter"
-              onChange={updateSortVal}
-            >
-              {filterOptions.map((option, index) => {
-                let showfish = option === "size (fish only)" && disableFish;
-                return (
-                  <MenuItem value={index} key={option} disabled={showfish}>
-                    {option}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </div>
       </div>
 
       <div className={cx("available", props.loading && "hidden")}>
@@ -382,7 +353,7 @@ function Critters(props) {
     </div>
   );
 }
-
+//
 // const usePrevious = (value, initialValue) => {
 //   const ref = useRef(initialValue);
 //   useEffect(() => {
