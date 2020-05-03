@@ -53,6 +53,9 @@ a {
   &.light {
     color: $dark-grey;
     background-color: $cream;
+    a {
+      color: inherit;
+    }
 
     .bugs {
       background-color: $light-green;
@@ -83,6 +86,9 @@ a {
   &.dark {
     background-color: #292c3d;
     color: $cream;
+    a {
+      color: inherit;
+    }
 
     .bugs {
       background-color: $dark-green;
@@ -240,10 +246,6 @@ a {
   justify-content: space-between;
   align-items: center;
   margin: 0.5%;
-
-  a {
-    color: white;
-  }
 
   h1 {
     margin: 0.2em 0;
