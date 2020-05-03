@@ -10,9 +10,14 @@ import cx from "clsx";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp as lightOn } from "@fortawesome/free-solid-svg-icons";
 import { faChevronDown as lightOff } from "@fortawesome/free-solid-svg-icons";
+import { useSwipeable } from "react-swipeable";
 
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import grey from "@material-ui/core/colors/grey";
@@ -24,6 +29,8 @@ const theme = createMuiTheme({
     },
   },
 });
+
+var filterOptions = ["value", "location", "size (fish only)", "alpha"];
 
 function Main(props) {
   const firebase = useContext(FirebaseContext);
@@ -37,6 +44,7 @@ function Main(props) {
   const [pickerSub, setSubmitted] = useState();
   const [usePicker, setPickerUse] = useState(false);
   const [mobileMenu, showMenu] = useState(false);
+  const [sort, setSort] = useState(3);
   const toggleLoading = (val) => {
     if (val) {
       setLoading(val);
@@ -103,9 +111,18 @@ function Main(props) {
     setPickerUse(e.target.checked);
   }
 
-  function move() {
-    showMenu(!mobileMenu);
+  function move(val) {
+    if (val) {
+      showMenu(val);
+    } else {
+      showMenu(!mobileMenu);
+    }
   }
+  const handlers = useSwipeable({
+    onSwipedUp: () => move(false),
+    onSwipedDown: () => move(true),
+    preventDefaultTouchmoveEvent: true,
+  });
 
   function reset() {
     setType(0);
@@ -114,6 +131,11 @@ function Main(props) {
     setSubmitted();
     setPickerUse(false);
     showMenu(false);
+  }
+
+  function updateSortVal(e) {
+    setSort(e.target.value);
+    // sortFunc(e.target.value);
   }
 
   return (
@@ -134,7 +156,10 @@ function Main(props) {
           sphere={sphere}
           reset={reset}
         />
-        <div className={cx("info", !!type && "little", mobileMenu && "show")}>
+        <div
+          className={cx("info", !!type && "little", mobileMenu && "show")}
+          {...handlers}
+        >
           {type !== 0 ? "" : <h1>Welcome to AC:NH Critter Collector.</h1>}
           <p className={type !== 0 ? "hidden" : ""}>
             Use the globe to switch hemispheres.
@@ -181,6 +206,33 @@ function Main(props) {
               ""
             )}
           </div>
+          {type !== 0 ? (
+            <div id="sort">
+              <FormControl>
+                <InputLabel id="sortLabel">Sort Order</InputLabel>
+                <Select
+                  labelId="sortLabel"
+                  value={sort}
+                  name="filter"
+                  onChange={updateSortVal}
+                >
+                  {filterOptions.map((option, index) => {
+                    return (
+                      <MenuItem
+                        value={index}
+                        key={option}
+                        disabled={type === 1 && index === 2}
+                      >
+                        {option}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </div>
+          ) : (
+            ""
+          )}
           <FormControlLabel
             control={
               <Checkbox
@@ -204,11 +256,12 @@ function Main(props) {
           ) : (
             ""
           )}
+
           <FontAwesomeIcon
             icon={mobileMenu ? lightOn : lightOff}
             title="test"
             transform="up-3"
-            onClick={move}
+            onClick={() => move()}
             id="menuButton"
           />
         </div>
@@ -221,6 +274,7 @@ function Main(props) {
             toggleLoading={toggleLoading}
             loading={loading}
             specific={pickerSub}
+            sort={sort}
           />
         ) : (
           ""

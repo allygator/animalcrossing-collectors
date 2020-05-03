@@ -40,6 +40,9 @@ a {
       #menuButton {
         display: none;
       }
+      .sort {
+        display: none;
+      }
     }
 
     #quick {
@@ -321,6 +324,10 @@ a {
   width: 80%;
 }
 
+#sort {
+  margin: 4px 0;
+}
+
 .content {
   display: flex;
   justify-content: center;
@@ -497,9 +504,6 @@ a {
         flex-direction: column;
       }
     }
-    #quick {
-      flex-direction: column;
-    }
   }
   #login-container {
     .user-fields {
@@ -508,6 +512,13 @@ a {
     }
   }
 }
+
+@media (max-width: 945px) {
+  .reduce {
+    display: none;
+  }
+}
+
 @media (max-width: 705px) {
   .dark {
     .little {
@@ -548,6 +559,8 @@ a {
       transition: transform 0.6s;
       padding: 2% 0 10px 0;
       margin: unset;
+      box-shadow: 0 0 7px black;
+      border-radius: 0 0 8px 8px;
       &.show {
         transform: translateY(0);
       }
@@ -625,10 +638,6 @@ a {
     width: 95%;
     align-items: center;
     flex-wrap: wrap;
-  }
-
-  .reduce {
-    display: none;
   }
 
   #instructions {
