@@ -179,12 +179,16 @@ function Main(props) {
               toggleLoading={toggleLoading}
               date={usePicker}
               submit={submit}
+              type={type}
             />
             <Button
               variant="contained"
               onClick={() => {
-                setType(4);
-                toggleLoading(true);
+                if (type === 4) {
+                } else {
+                  setType(4);
+                  toggleLoading(true);
+                }
               }}
               id="monthButton"
             >

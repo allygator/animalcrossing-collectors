@@ -15,9 +15,11 @@ function Options(props) {
       {options.map((option, index) => (
         <Button
           onClick={() => {
-            props.setType(index + 1);
-            props.toggleLoading(true);
-            props.date ? props.submit(true) : props.submit(false);
+            if (props.type !== index + 1) {
+              props.setType(index + 1);
+              props.toggleLoading(true);
+              props.date ? props.submit(true) : props.submit(false);
+            }
           }}
           key={option}
         >
