@@ -1,11 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { FirebaseContext } from "./Firebase";
-import UserContext from "./UserContext";
-import Header from "./Header";
-import Critters from "./Critters";
-import Options from "./Options";
-import Date from "./Date";
-import Loadingsvg from "./svg/Loadingsvg";
+
 import cx from "clsx";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -22,6 +16,15 @@ import { useSwipeable } from "react-swipeable";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import grey from "@material-ui/core/colors/grey";
 
+import { FirebaseContext } from "./Firebase";
+import UserContext from "./UserContext";
+import Header from "./Header";
+import Critters from "./Critters";
+import Options from "./Options";
+import Date from "./Date";
+import Constants from "./Constants";
+import Loadingsvg from "./svg/Loadingsvg";
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -33,9 +36,10 @@ const theme = createMuiTheme({
 var filterOptions = ["value", "location", "size (fish only)", "alpha"];
 
 function Main(props) {
+  const constants = useContext(Constants);
   const firebase = useContext(FirebaseContext);
   const userData = useContext(UserContext);
-  const [type, setType] = useState(0);
+  const [type, setType] = useState([]);
   const [lighting, setLight] = useState(true);
   const [hideDonated, setDonated] = useState(false);
   const [sphere, setSphere] = useState(true);
@@ -102,6 +106,22 @@ function Main(props) {
       return;
     }
   }, [firebase, userData, sphere]);
+  useEffect(() => {
+    if (Object.keys(constants?.options).length > 0) {
+      let tempArr = new Array(constants.options.length);
+      console.log(tempArr);
+      for (let i = 0; i < constants.options.length; i++) {
+        if (i < 2) tempArr[i] = true;
+        else tempArr[i] = false;
+      }
+      console.log(tempArr);
+      setType(tempArr);
+    }
+  }, [constants.options]);
+
+  useEffect(() => {
+    console.log(type);
+  }, [type]);
 
   function handleChange(e) {
     setDonated(e.target.checked);
@@ -177,7 +197,6 @@ function Main(props) {
             <Options
               setType={pickType}
               toggleLoading={toggleLoading}
-              date={usePicker}
               submit={submit}
               type={type}
             />
@@ -192,8 +211,19 @@ function Main(props) {
               }}
               id="monthButton"
             >
+              Search<span className="reduce">&nbsp;Collections</span>
+            </Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                setType(4);
+                toggleLoading(true);
+              }}
+              id="monthButton"
+            >
               <span className="reduce">All&nbsp;</span> Month
             </Button>
+
             {userData ? (
               <FormControlLabel
                 control={

@@ -36,7 +36,7 @@ a {
     }
 
     .info {
-      width: 60%;
+      width: 80%;
       #menuButton {
         display: none;
       }
@@ -103,6 +103,112 @@ a {
     .MuiCheckbox-root,
     .MuiFormLabel-root,
     .MuiInputBase-root,
+    .MuiSelect-icon,
+    .MuiFormHelperText-root {
+      color: $cream;
+    }
+
+    .MuiAvatar-circle.on {
+      background-color: $brown;
+    }
+
+    .MuiInput-underline:before,
+    .MuiInput-underline:hover:not(.Mui-disabled):before {
+      border-bottom-color: $cream;
+    }
+
+    #loading-container {
+      background-color: $dark-grey;
+    }
+  }
+<<<<<<< Updated upstream
+=======
+}
+
+.other {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  transition: background-color 750ms, color 750ms;
+
+  .art {
+    .MuiCardHeader-content {
+      text-transform: capitalize;
+    }
+  }
+
+  &.centered {
+    justify-content: center;
+    #header {
+      width: 98%;
+      // margin: 0;
+      padding: 0 6px;
+      position: fixed;
+      top: 2px;
+      left: 0;
+      z-index: 2;
+    }
+
+    .info {
+      width: 80%;
+      display: flex;
+      justify-content: center;
+      #menuButton {
+        display: none;
+      }
+      .sort {
+        display: none;
+      }
+    }
+
+    #quick {
+      width: 100%;
+    }
+  }
+
+  &.light {
+    color: $dark-grey;
+    background-color: $cream;
+    a {
+      color: $dark-grey;
+    }
+
+    .MuiCardContent-root,
+    .MuiCardHeader-root,
+    .MuiFormLabel-root {
+      color: $dark-grey;
+      &.Mui-focused {
+        color: $dark-green;
+      }
+    }
+
+    .MuiAvatar-circle.on {
+      background-color: $brown;
+    }
+
+    #loading-container {
+      background-color: $cream;
+    }
+  }
+
+  &.dark {
+    background-color: $dark-grey;
+    color: $cream;
+    a {
+      color: $cream;
+    }
+
+    .art {
+      background-color: #6a6984;
+    }
+
+    .MuiCardContent-root,
+    .MuiCardHeader-root,
+    .MuiCheckbox-root,
+    .MuiFormLabel-root,
+    .MuiInputBase-root,
     .MuiSelect-icon {
       color: $cream;
     }
@@ -120,6 +226,7 @@ a {
       background-color: $dark-grey;
     }
   }
+>>>>>>> Stashed changes
 
   .little {
     display: flex;
@@ -262,6 +369,13 @@ a {
     height: 40px;
     width: 40px;
     margin: 0 4px;
+    svg {
+      > g {
+        > g {
+          transform: translateX(0);
+        }
+      }
+    }
   }
 }
 
@@ -322,8 +436,19 @@ a {
 
 #quick {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
   width: 80%;
+  fieldset {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .MuiFormGroup-root {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 #sort {
@@ -546,7 +671,7 @@ a {
         bottom: 2px;
       }
       .info {
-        width: 85%;
+        width: 90%;
         #specific {
           padding-bottom: 12%;
         }
@@ -638,8 +763,12 @@ a {
 
   #quick {
     width: 95%;
+    margin: auto;
     align-items: center;
     flex-wrap: wrap;
+    fieldset {
+      margin: auto;
+    }
   }
 
   #instructions {
