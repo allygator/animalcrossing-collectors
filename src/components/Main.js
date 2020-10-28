@@ -55,7 +55,9 @@ function Main(props) {
     }
   };
   const pickType = (val) => {
+    
     setType(val);
+    setSort(3);
   };
   const submit = (val) => {
     if (val) {
