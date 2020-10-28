@@ -20,9 +20,9 @@ function Critters(props) {
   const toggleLoading = props.toggleLoading;
   let currentDate = new Date();
 
-  useEffect(() => {
-    console.log(critters);
-  }, [critters])
+  // useEffect(() => {
+  //   console.log(critters);
+  // }, [critters])
 
   //Get what the user has already collected/donated
   useEffect(() => {
