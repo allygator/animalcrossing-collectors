@@ -20,6 +20,10 @@ function Critters(props) {
   const toggleLoading = props.toggleLoading;
   let currentDate = new Date();
 
+  useEffect(() => {
+    console.log(critters);
+  }, [critters])
+
   //Get what the user has already collected/donated
   useEffect(() => {
     if (userData?.authUser) {
@@ -29,6 +33,7 @@ function Critters(props) {
         .doc(userData.authUser.uid)
         .onSnapshot(
           (doc) => {
+            console.log(doc.data());
             setCollection(doc.data());
           },
           (err) => {
@@ -61,6 +66,7 @@ function Critters(props) {
     let timeQuery = "Time.".concat(date.getHours());
     var itemHolder = [];
     if (!useLocal) {
+      console.log("running filter");
       switch (type) {
         //User selected "all critters"
         case 3:
@@ -93,6 +99,7 @@ function Critters(props) {
           break;
         //User selected "bugs"
         case 1:
+          console.log(type);
           firebase.db
             .collection("bugs")
             .where(monthQuery, "==", true)
@@ -177,7 +184,7 @@ function Critters(props) {
           break;
         //User selected "bugs"
         case 1:
-          itemHolder = itemHolder.filter((a) => {
+          itemHolder = allCritters.filter((a) => {
             let month;
             let hour = date.getHours();
             if (loc.includes("Months")) {
@@ -194,7 +201,7 @@ function Critters(props) {
           break;
         //User selected "fish"
         case 2:
-          itemHolder = itemHolder.filter((a) => {
+          itemHolder = allCritters.filter((a) => {
             let month;
             let hour = date.getHours();
             if (loc.includes("Months")) {
@@ -233,7 +240,7 @@ function Critters(props) {
   }, [type, firebase.db, useLocal, hemisphere, specific]);
 
   useEffect(() => {
-    let tempCritters = critters;
+    let tempCritters = [critters];
     if (tempCritters.length > 0) {
       //value=0, location=1, size=2, alpha=3
       switch (sort) {
@@ -279,7 +286,7 @@ function Critters(props) {
       setCritters([...tempCritters]);
     }
     // eslint-disable-next-line
-  }, [sort, type]);
+  }, [sort]);
   return (
     <div className="content">
       <div id="instructions">
