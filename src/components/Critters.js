@@ -8,6 +8,7 @@ import cx from "clsx";
 var types = ["", "bugs", "fish", "all"];
 
 function Critters(props) {
+  
   const firebase = useContext(FirebaseContext);
   const userData = useContext(UserContext);
   const [critters, setCritters] = useState([]);
@@ -16,7 +17,8 @@ function Critters(props) {
   let type = props.type;
   let specific = props.specific;
   let hemisphere = props.hemisphere;
-  let sort = props.sort;
+  //Sort isnt working, just going to disable it for now.
+  // let sort = props.sort;
   const toggleLoading = props.toggleLoading;
   let currentDate = new Date();
 
@@ -33,7 +35,7 @@ function Critters(props) {
         .doc(userData.authUser.uid)
         .onSnapshot(
           (doc) => {
-            console.log(doc.data());
+            // console.log(doc.data());
             setCollection(doc.data());
           },
           (err) => {
@@ -66,7 +68,6 @@ function Critters(props) {
     let timeQuery = "Time.".concat(date.getHours());
     var itemHolder = [];
     if (!useLocal) {
-      console.log("running filter");
       switch (type) {
         //User selected "all critters"
         case 3:
@@ -239,54 +240,55 @@ function Critters(props) {
     // eslint-disable-next-line
   }, [type, firebase.db, useLocal, hemisphere, specific]);
 
-  useEffect(() => {
-    let tempCritters = [critters];
-    if (tempCritters.length > 0) {
-      //value=0, location=1, size=2, alpha=3
-      switch (sort) {
-        case 0:
-          tempCritters.sort((a, b) => {
-            if (a.Value > b.Value) {
-              return 1;
-            } else {
-              return -1;
-            }
-          });
-          break;
-        case 1:
-          tempCritters.sort((a, b) => {
-            if (a.Location > b.Location) {
-              return 1;
-            } else {
-              return -1;
-            }
-          });
-          break;
-        case 2:
-          tempCritters.sort((a, b) => {
-            if (a?.Shadow > b?.Shadow) {
-              return 1;
-            } else {
-              return -1;
-            }
-          });
-          break;
-        case 3:
-          tempCritters.sort((a, b) => {
-            if (a.Name > b.Name) {
-              return 1;
-            } else {
-              return -1;
-            }
-          });
-          break;
-        default:
-          break;
-      }
-      setCritters([...tempCritters]);
-    }
-    // eslint-disable-next-line
-  }, [sort]);
+  // useEffect(() => {
+  //   let tempCritters = [critters];
+  //   if (tempCritters.length > 0) {
+  //     //value=0, location=1, size=2, alpha=3
+  //     switch (sort) {
+  //       case 0:
+  //         tempCritters.sort((a, b) => {
+  //           if (a.Value > b.Value) {
+  //             return 1;
+  //           } else {
+  //             return -1;
+  //           }
+  //         });
+  //         break;
+  //       case 1:
+  //         tempCritters.sort((a, b) => {
+  //           if (a.Location > b.Location) {
+  //             return 1;
+  //           } else {
+  //             return -1;
+  //           }
+  //         });
+  //         break;
+  //       case 2:
+  //         tempCritters.sort((a, b) => {
+  //           if (a?.Shadow > b?.Shadow) {
+  //             return 1;
+  //           } else {
+  //             return -1;
+  //           }
+  //         });
+  //         break;
+  //       case 3:
+  //         tempCritters.sort((a, b) => {
+  //           if (a.Name > b.Name) {
+  //             return 1;
+  //           } else {
+  //             return -1;
+  //           }
+  //         });
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //     console.log(tempCritters);
+  //     setCritters([...tempCritters]);
+  //   }
+  //   // eslint-disable-next-line
+  // }, [sort]);
   return (
     <div className="content">
       <div id="instructions">
