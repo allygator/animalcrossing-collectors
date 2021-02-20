@@ -1,49 +1,70 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import ListItemText from "@material-ui/core/ListItemText";
+import Select from "@material-ui/core/Select";
+import Checkbox from "@material-ui/core/Checkbox";
+import Chip from "@material-ui/core/Chip";
+
+const useStyles = makeStyles((theme) => ({
+	formControl: {
+		minWidth: 235,
+		// maxWidth: 300,
+	},
+	chips: {
+		display: "flex",
+		flexWrap: "wrap",
+	},
+	chip: {
+		margin: 2,
+	},
+}));
 
 function Options(props) {
-  const options = ["Bugs", "Fish", "Both"];
+	const classes = useStyles();
+	// const options = ["Bugs", "Fish", "Deep-sea", "Fossils", "Art", "Songs"];
+	const options = ["Bugs", "Fish", "Deep-sea"];
+	const [choice, setChoice] = useState(["Bugs", "Fish"]);
 
-  return (
-    <ButtonGroup
-      size="medium"
-      color="primary"
-      variant="contained"
-      aria-label="outlined primary button group"
-    >
-      {options.map((option, index) => (
-        <Button
-          onClick={() => {
-            if (props.type !== index + 1) {
-              props.setType(index + 1);
-              props.toggleLoading(true);
-              props.date ? props.submit(true) : props.submit(false);
-            }
-          }}
-          key={option}
-        >
-          {index === 2 ? (
-            ""
-          ) : props.type ? (
-            ""
-          ) : (
-            <span className="reduce">Available&nbsp;</span>
-          )}
-          {option}
-          {index === 2 ? (
-            props.type ? (
-              ""
-            ) : (
-              <span className="reduce">&nbsp;Available</span>
-            )
-          ) : (
-            ""
-          )}
-        </Button>
-      ))}
-    </ButtonGroup>
-  );
+	const handleChange = (event) => {
+		setChoice(event.target.value);
+	};
+
+	useEffect(() => {
+		props.setChoices(choice);
+	}, [choice]);
+
+	return (
+		<FormControl className={classes.formControl}>
+			<InputLabel id="options-label">Select collections to track</InputLabel>
+			<Select
+				labelId="options-label"
+				id="options-select"
+				multiple
+				value={choice}
+				onChange={handleChange}
+				input={<Input id="select-multiple-chip" />}
+				renderValue={(selected) => (
+					<div className={classes.chips}>
+						{selected.map((value) => (
+							<Chip key={value} label={value} className={classes.chip} />
+						))}
+					</div>
+				)}
+			>
+				{options.map((option) => (
+					<MenuItem key={option} value={option}>
+						{option}
+					</MenuItem>
+				))}
+			</Select>
+		</FormControl>
+	);
 }
 
 export default Options;

@@ -4,6 +4,8 @@ $dark-blue: #32637a;
 $light-blue: #8ad0e0;
 $dark-grey: #292c3d;
 $light-grey: #979cb2;
+$dark-purple: #4d3d7b;
+$light-purple: #b7acd7;
 $cream: #edece1;
 $peach: #ffebdd;
 $tan: #b7a07e;
@@ -52,6 +54,10 @@ a {
 		#quick {
 			width: 100%;
 		}
+
+		#specific {
+			margin: 8px 0;
+		}
 	}
 
 	&.light {
@@ -67,6 +73,9 @@ a {
 
 		.fish {
 			background-color: $light-blue;
+		}
+		.deepsea {
+			background-color: $light-purple;
 		}
 
 		.MuiCardContent-root,
@@ -100,6 +109,9 @@ a {
 
 		.fish {
 			background-color: $dark-blue;
+		}
+		.deepsea {
+			background-color: $dark-purple;
 		}
 
 		.MuiCardContent-root,
@@ -153,9 +165,9 @@ a {
 		}
 
 		#specific {
-			h3 {
-				margin: 0.5em 0;
-			}
+			// h3 {
+			// 	margin: 0.5em 0;
+			// }
 			#specific-options {
 				// flex-direction: column;
 				align-items: center;
@@ -184,6 +196,7 @@ a {
 
 		.specific-form {
 			min-width: 100px;
+			margin: 0 8px;
 		}
 	}
 
@@ -213,16 +226,24 @@ a {
 	}
 }
 
-#collections {
+.collections {
 	display: flex;
 	justify-content: space-between;
 	margin-top: 4px;
 
-	> div:not(#divider) {
+	> label {
 		display: flex;
 		// flex-direction: column;
 		align-items: center;
 		justify-content: space-around;
+		margin-left: 0;
+		span {
+			font-size: 12px;
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+				Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+				"Segoe UI Symbol";
+			letter-spacing: 1px;
+		}
 	}
 
 	.MuiAvatar-root {
@@ -235,7 +256,7 @@ a {
 	}
 }
 
-#extraInfo {
+.extraInfo {
 	display: flex;
 	justify-content: space-between;
 
@@ -328,6 +349,9 @@ a {
 	display: flex;
 	justify-content: space-evenly;
 	width: 80%;
+	margin: auto;
+	align-items: center;
+	flex-wrap: wrap;
 }
 
 #sort {
@@ -356,9 +380,9 @@ a {
 	position: absolute;
 	width: 100vw;
 	height: 100vh;
-	opacity: 0;
-	transition: opacity 0.8s;
-	animation: out 2s ease-out 1;
+	// opacity: 0;
+	// transition: opacity 0.8s;
+	// // animation: out 2s ease-out 1;
 	top: 0;
 	z-index: 1;
 	display: flex;
@@ -667,6 +691,9 @@ a {
 		position: fixed;
 		top: 0;
 		left: 0;
+		a {
+			color: unset;
+		}
 	}
 
 	&.light {
